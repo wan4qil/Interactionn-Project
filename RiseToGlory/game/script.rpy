@@ -2,7 +2,8 @@ define narrator = Character(None)
 define player = Character("[player_name]")
 define coach = Character("Coach Rahman", color="#58d68d")
 define scout = Character("Maya Chen", color="#79b8ff")
-define teammate = Character("Afiq", color="#ffd166")
+define captain = Character("Afiq", color="#ffd166")
+define teammate = Character("Daniel", color="#a8d8ea")
 define analyst = Character("Performance Analyst", color="#d7b7ff")
 
 
@@ -274,12 +275,65 @@ label introduction:
     narrator "You are [player_name], a young footballer who grew up chasing a torn ball across narrow streets, empty car parks, and one stubborn little field behind the school."
     narrator "Your boots are not new. Your family still checks the price of every away trip. But when the ball comes to you, the noise of ordinary life disappears."
     narrator "Tonight, you walk through the academy gate for the first time. Beyond it are floodlights, scouts, contracts, rival players, dressing-room politics, and the quiet fear that maybe the dream is bigger than you."
-    teammate "You are the new one, right? Afiq. Do not look so shocked. Everyone gets nervous the first day."
+    captain "You are the new one, right? [player_name]. Do not look so shocked. Everyone gets nervous the first day."
     player "I thought getting here would feel like the finish line."
     coach "It is not the finish line, [player_name]. It is the first whistle."
     coach "Talent brought you to this field. Discipline decides whether you stay. Courage decides whether anyone remembers you."
 
     $ add_note("Target users receive a simple goal immediately: guide a player toward a professional career.")
+
+# --- NEW DRAMA EXPANSION BEGINS HERE ---
+
+    narrator "Coach Rahman walks away, his whistle gleaming under the floodlights. The moment he is out of earshot, the quiet evening air shatters."
+
+    show main_player at left with dissolve
+    show teammate at right with dissolve
+
+    teammate "Don't let the old man's speeches get to your head, 'prodigy'."
+
+    narrator "Afiq tosses a mud-stained training bib right at your chest. It lands with a heavy, wet thud."
+
+    teammate "Look around you. Half the guys here were captain of their state teams. The other half have fathers who played in the top tier."
+    teammate "Then you walk in with boots that look like they survived a war, and suddenly the scouts are whispering?"
+
+    player "I earned my trial here just like everyone else, Afiq."
+
+    teammate "Trial? This isn't a playground. There are only two open spots left on the registration list for the upcoming cup tournament."
+    teammate "If you rise, someone else falls. I've spent three years bleeding for this academy. I'm not letting some street-baller take my spot in the showcase."
+
+    narrator "The surrounding academy players stop their drills, turning their heads to watch the confrontation. The pressure in your chest tightens like a vice."
+
+    menu:
+        "How do you handle Afiq's open hostility?"
+
+        "Keep your cool and let your football do the talking":
+            $ teamwork += 1
+            $ coach_opinion += 1
+            $ pressure += 1
+            player "Then don't worry about me, Afiq. Worry about keeping up with me on the pitch."
+            teammate "Arrogant, aren't we? Let's see if that mouth can save you when the tackles start flying."
+            narrator "You swallow your anger and look past him toward the grass. You've faced tougher critics on concrete streets."
+
+        "Fire back and draw a line in the sand":
+            $ confidence += 2
+            $ pressure += 2
+            $ teamwork -= 1
+            player "If your three years of hard work can be threatened by 'some street-baller' in one day, maybe you aren't as good as you think you are."
+            narrator "A collective 'oh' ripples through the watching players. Afiq steps up, chest to chest, his eyes burning."
+            teammate "You're going to regret saying that. When we get into the match drills, I'm personally making sure you don't finish the session."
+
+        "Defuse the situation and show humility":
+            $ teamwork += 2
+            $ confidence -= 1
+            player "I'm not here to take anyone's place, man. I'm just trying to help my family. We can both make the squad if we play together."
+            narrator "Afiq blinks, momentarily caught off guard by your lack of malice, before scowling and stepping back."
+            teammate "This is professional football, not a charity. There is no 'together' when a contract is on the line."
+
+    narrator "Before the tension can boil over into a physical fight, a sharp blast of a whistle echoes across the training ground."
+
+    captain "Daniel! [player_name]! If you two have that much energy to waste, you can run laps until midnight!"
+
+    narrator "The crowd scatter instantly, retrieving their footballs as Coach Rahman approaches with a clipboard, his eyes narrowing at the group."
 
     jump choose_position
 
@@ -411,7 +465,7 @@ label first_match:
         jump bench_arc
 
     narrator "The team sheet goes up on the wall. Your name is in the starting lineup."
-    teammate "First start. Do not play the occasion. Play the ball."
+    captain "First start. Do not play the occasion. Play the ball."
     narrator "By the 83rd minute, the match is tied. Rain shines under the floodlights. Every pass sounds louder than it should."
 
     if position == "Attacker":
@@ -435,7 +489,7 @@ label bench_arc:
     coach "Then prove it from minute one of training tomorrow. A career is not built only on match nights."
     narrator "For eighty minutes, you sit in a jacket, watching players in your position make the runs, tackles, passes, or saves you imagined for yourself."
     narrator "The match ends in a draw. Nobody blames you. Somehow, that hurts more."
-    teammate "Do not disappear because of one bench. Make the coach feel uncomfortable leaving you out."
+    captain "Do not disappear because of one bench. Make the coach feel uncomfortable leaving you out."
 
     menu:
         "How do you begin the hard-work arc?"
@@ -455,7 +509,7 @@ label bench_arc:
             $ teamwork += 2
             $ first_match_result = "bench learner"
             narrator "You learn tiny professional habits: how to recover, when to speak, how to read a defender's hips, how to stay ready without sulking."
-            teammate "You listened. That is why you are still moving forward."
+            captain "You listened. That is why you are still moving forward."
 
         "Complain and wait for another chance":
             $ confidence += 1
@@ -488,7 +542,7 @@ label first_match_attacker:
                 $ confidence += 1
                 $ teamwork += 1
                 narrator "You wait half a heartbeat, pull the goalkeeper toward you, and slide the ball across the six-yard box. Afiq scores into an open net."
-                teammate "That was perfect. You saw the move before everyone else."
+                captain "That was perfect. You saw the move before everyone else."
             else:
                 $ first_match_result = "blocked pass"
                 $ coach_opinion -= 1
@@ -523,7 +577,7 @@ label first_match_midfielder:
                 $ coach_opinion += 2
                 $ teamwork += 2
                 narrator "You disguise your hips, wait for Afiq's second run, and slide the ball through a gap that was open for less than a second."
-                teammate "I only had to run. You gave me the goal."
+                captain "I only had to run. You gave me the goal."
             else:
                 $ first_match_result = "forced pass"
                 $ reputation -= 1
@@ -570,7 +624,7 @@ label first_match_defender:
                 $ coach_opinion += 2
                 $ teamwork += 2
                 narrator "You hold the line, point your full-back inside, and close the shooting angle. The opponent fires wide from frustration."
-                teammate "You kept us organized. I heard you the whole way."
+                captain "You kept us organized. I heard you the whole way."
             else:
                 $ first_match_result = "invited pressure"
                 $ pressure += 1
@@ -605,7 +659,7 @@ label first_match_goalkeeper:
                 $ coach_opinion += 2
                 $ teamwork += 1
                 narrator "You wait until the striker commits, then drop low to smother the finish. The save looks calm because the decision was brave."
-                teammate "You saved us. Simple as that."
+                captain "You saved us. Simple as that."
             else:
                 $ first_match_result = "late reaction"
                 $ confidence -= 1
