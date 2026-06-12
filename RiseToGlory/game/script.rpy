@@ -5,6 +5,7 @@ define scout = Character("Maya Chen", color="#79b8ff")
 define teammate = Character("Afiq", color="#ffd166")
 define analyst = Character("Performance Analyst", color="#d7b7ff")
 
+
 image bg stadium_dawn = "images/stadium_dawn.png"
 image bg opening_stadium = "images/opening_stadium.png"
 image bg stadium_day = "images/stadium_day.png"
@@ -18,6 +19,11 @@ image bg transfer_meeting_room = "images/transfer_meeting_room.png"
 image bg finale = "images/finale.png"
 image bg career_outcome_celebration = "images/career_outcome_celebration.png"
 image maya_chen = "images/maya_chen.png"
+image bg training_ground_empty_dawn = "images/training_ground_empty_dawn.png"
+image main_player = "images/main_player.png"
+
+transform scale_up:
+    zoom 0.6
 
 transform scout_right:
     xalign 0.84
@@ -215,6 +221,9 @@ label start:
     jump reset_story
 
 label reset_story:
+    scene bg training_ground_empty_dawn        
+    with fade
+    show main_player at center, scale_up
     $ player_name = renpy.input("Enter your player's name:", length=20).strip()
     if player_name == "":
         $ player_name = "Player"
