@@ -29,10 +29,14 @@ image bg training_drills = "images/training_drills.png"
 image bg dressing_room = "images/dressing_room.png"
 image bg players_staring = "images/players_staring.png"
 image afiq = "images/afiq.png"
+image captain = "images/afiq.png"
 image main_player_front = "images/main_player_front.png"
 image coach_rahman = "images/coach_rahman.png"
 image coach_rahman_excited = "images/coach_rahman_excited.png"
 image main_talking = "images/main_talking.png"
+image bg first_match = "images/first_match.png"
+image bg players_celebrate = "images/players_celebrate.png"
+image bg gooaall = "images/gooaall.png"
 image afiq_smirk = "images/afiq_smirk.png"
 image afiq_bib = "images/afiq_bib.png"
 image main_normal_face = "images/main_normal_face.png"
@@ -53,6 +57,11 @@ image coach_rahman_excited = "images/coach_rahman_excited.png"
 image afiq_disbelieve = "images/afiq_disbelieve.png"
 image main_player_smirk = "images/main_player_smirk.png"
 image coach_rahman_crosshand = "images/coach_rahman_crosshand.png"
+image bg press_conference = "images/press_conference.png"
+image bg tunnel = "images/tunnel.png"
+image bg out_tunnel = "images/tunnel.png"
+image bg advanced_match = "images/advanced_match.png"
+image bg final_celebration = "images/final_celebration.png"
 
 show top_bar:
     xpos 0
@@ -122,6 +131,33 @@ default first_start = False
 default evaluation_notes = []
 
 init python:
+    import math
+
+    class DispTextStyle():
+        """Tracks active text style tags so styled characters explode correctly."""
+        def __init__(self):
+            self.tags = []
+
+        def add_tags(self, tag):
+            if tag.startswith("/"):
+                clean = tag[1:]
+                if clean in self.tags:
+                    self.tags.remove(clean)
+                    return True
+            else:
+                self.tags.append(tag)
+                return True
+            return False
+
+        def apply_style(self, char):
+            result = ""
+            for t in self.tags:
+                result += "{" + t + "}"
+            result += char
+            for t in reversed(self.tags):
+                result += "{/" + t + "}"
+            return result
+
     def clamp_stat(value):
         return max(-3, min(10, value))
 
@@ -169,7 +205,7 @@ screen project_main_menu():
 screen project_instructions():
     tag menu
 
-    add "images/office.png"
+    add "images/coach_office.png"
     add Solid("#020509aa")
 
     frame:
@@ -442,6 +478,7 @@ label choose_position:
     scene bg training_drills
     with dissolve
 
+    show coach_rahman at center, scale_down with dissolve
     coach "Before I judge your level, I need to know your football mind. Where do you see the game from?"
 
     menu:
@@ -490,6 +527,10 @@ label training_decision:
 
     show coach_rahman at center, scale_down with dissolve
     narrator "{cps=60}The first elite training session is faster than expected. Players sprint, collide, recover, shout, reset, and sprint again.{/cps}"
+    scene black with fade
+    $ renpy.movie_cutscene("videos/training.webm", stop_music=True)
+    scene bg academy_training_ground with fade
+    show coach_rahman at center, scale_down with dissolve
     coach "Today is not about looking talented. Today is about proving you can repeat good decisions when your lungs are burning."
 
     hide coach_rahman with dissolve
@@ -518,6 +559,8 @@ label training_decision:
             show coach_rahman_mad at right, scale_coach_mad with dissolve
             coach "[player_name]! Afiq! Keep your hands to yourselves or both of you can pack your bags right now!"
             narrator "{cps=60}The coach writes something sharp on his clipboard. Your temper just cost you points with the staff.{/cps}"
+            hide main_push_afiq with dissolve
+            hide coach_rahman_mad with dissolve
 
         "Dust yourself off silently and offer a mocking smirk":
             $ confidence += 2
@@ -535,11 +578,14 @@ label training_decision:
             narrator "{cps=60}You pull yourself up and offer a brief, professional nod. Coach Rahman watches from a distance, nodding slightly at your maturity.{/cps}"
             coach "Good tracking, Afiq. Clean recovery, [player_name]. Keep the ball moving!"
 
+    scene bg players_training with dissolve
     narrator "{cps=60}The whistle blows again, forcing everyone back into their tactical roles. The air is thick with sweat, rain, and spite.{/cps}"
 
     if position == "Attacker":
+        show main_training at center, scale_up with dissolve
         narrator "{cps=60}Your drill is ruthless: curved runs behind the line, first-time finishing, weak-foot shots, and pressing triggers when the defender receives with a bad touch.{/cps}"
     elif position == "Midfielder":
+        show main_training at center, scale_up with dissolve
         narrator "{cps=60}Your drill is a storm of rondos, half-turn receiving, scanning before the pass, switch-of-play timing, and resisting the urge to force every ball forward.{/cps}"
     elif position == "Defender":
         narrator "{cps=60}Your drill is built on duels: body shape, recovery runs, last-second blocks, defensive headers, and choosing when to step out or hold the line.{/cps}"
@@ -570,7 +616,12 @@ label training_decision:
             $ skill += 2
             $ coach_opinion += 2
             $ teamwork += 1
+            hide main_training with dissolve
+            show bg training_ground_real with dissolve
+            show main_asking at left, scale_up with dissolve
+            show coach_rahman at right, scale_down with dissolve
             coach "That is professional behavior. You improve faster when you understand why."
+            show analyst at right, scale_down with dissolve
             analyst "Your clips are not perfect, but you are asking the right questions. That matters."
             narrator "{cps=60}You learn the system instead of just surviving the drill.{/cps}"
 
@@ -612,9 +663,11 @@ label first_match:
         jump bench_arc
 
     narrator "{cps=60}The team sheet goes up on the wall. Your name is in the starting lineup.{/cps}"
+    show afiq_football at center, scale_down with dissolve
     captain "First start. Do not play the occasion. Play the ball."
 
-    show captain at center with dissolve
+    hide afiq_football with dissolve
+    show afiq_unsatisfied at center, scale_down with dissolve
     narrator "{cps=60}Afiq stands in front of the board, staring at your name in the Starting XI. His knuckles are white as he grips his kit bag.{/cps}"
     captain "Starting? You've been here five minutes and he's handing you the shirt?"
                 
@@ -624,7 +677,10 @@ label first_match:
         "Remind him of his own advice":
             $ confidence += 2
             $ pressure += 1
+            hide afiq_unsatisfied with dissolve
+            show main_asking at center, scale_up with dissolve
             player "Like you said, Afiq... don't play the occasion. Play the ball. Watch me play it tonight."
+            show afiq_unsatisfied at right, scale_down with dissolve
             captain "Arrogant bastard. If you drop points for us out there, I'll make sure the gaffer never forgets it."
             narrator "{cps=60}He brushes past you, slamming the dressing room door shut.{/cps}"
 
@@ -633,22 +689,20 @@ label first_match:
             $ coach_opinion += 1
             player "The coach made the call, not me. But we need a win tonight. Let's put this aside until full-time."
             narrator "{cps=60}Afiq looks at your extended hand, scowls, and ignores it—but his posture loosens slightly.{/cps}"
-            captain "Don't mistake my silence for friendship, street-boy. Just don't ruin my stats out there."
-                
-    hide captain with dissolve
-    narrator "{cps=60}By the 83rd minute, the match is tied. Rain shines under the floodlights. Every pass sounds louder than it should.{/cps}"
+            captain "Don't mistake my silence for friendship, street-boy. Just don't ruin my stats out there."        
 
-    if position == "Attacker":
-        narrator "{cps=60}A long diagonal drops behind the full-back. You bring it down inside the box. The goalkeeper steps forward, and Afiq screams for the square pass.{/cps}"
+    hide afiq_unsatisfied with dissolve
+
+    scene bg first_match with dissolve    
+    narrator "{cps=60}By the 83rd minute, the match is tied. Every pass sounds louder than it should.{/cps}"
+
+    if position == "Attacker":        
         jump first_match_attacker
     elif position == "Midfielder":
-        narrator "{cps=60}You receive between the lines with one touch to turn. Afiq is sprinting behind the centre-backs, but the opponent's midfield is tired and the game is ready to be controlled.{/cps}"
         jump first_match_midfielder
     elif position == "Defender":
-        narrator "{cps=60}The opponent breaks down your side. Their winger cuts inside, their striker darts across your shoulder, and one wrong step opens the goal.{/cps}"
         jump first_match_defender
     else:
-        narrator "{cps=60}A loose back pass slows in the wet grass. Their striker reaches it first. Suddenly it is just you, the attacker, and the sound of the crowd rising.{/cps}"
         jump first_match_goalkeeper
 
 label bench_arc:
@@ -726,9 +780,12 @@ label bench_arc:
     jump coach_feedback
 
 label first_match_attacker:
-    narrator "{cps=60}The match reaches a boiling point. The stadium lights cut through the heavy rain.{/cps}"
+    narrator "{cps=60}The match reaches a boiling point.{/cps}"
     narrator "{cps=60}A long diagonal pass drops cleanly behind the opponent's full-back . You bring it down inside the penalty box with a sharp first touch .{/cps}"
     narrator "{cps=60}The goalkeeper rushes forward, trying to narrow your angle . Out of the corner of your eye, you see Afiq sprinting into space.{/cps}"
+    scene black with fade
+    $ renpy.movie_cutscene("videos/first_match_situation.webm", stop_music = True)
+    scene bg one_on_one with dissolve
     captain "[player_name]! Square it! Square the damn ball!" 
 
     menu:
@@ -769,6 +826,11 @@ label first_match_attacker:
                 narrator "{cps=60}The ball flashes across the wet grass and kisses the inside of the far post. Goal! {/cps}"
                 scene bg gooaall with dissolve
                 narrator "{explode=1.5}GOOOOOOOOOOOOAAAAAAAALLLLLLLLLL!!!!!! {/explode}"
+                scene bg gooaall with dissolve
+                narrator "{explode=1.5}GOOOOOOOOOOOOAAAAAAAALLLLLLLLLL!!!!!! {/explode}"
+                
+                scene bg players_celebrate with dissolve
+                coach "That is the kind of courage scouts remember." 
                 
                 scene bg players_celebrate with dissolve
 
@@ -969,102 +1031,6 @@ label first_match_goalkeeper:
 
     jump first_match_wrap
 
-label post_match_debrief:
-    scene bg office
-    with dissolve
-    
-    narrator "{cps=60}The steam from the showers fills the damp dressing room. The rain outside has stopped, but the atmosphere inside is still charged.{/cps}"
-    
-    if first_match_result in ["assist", "through ball assist", "defensive stand", "one on one save"]:
-        show captain at center with dissolve
-        narrator "{cps=60}Afiq sits on the bench, unstrapping his shin guards. He looks up as you walk past your locker.{/cps}"
-        captain "Hey. [player_name]."
-        player "Yeah?"
-        captain "Out there... on that play. You didn't play like a selfish street-baller. You played for the badge."
-        captain "Don't think we're best friends now. The next trial match is going to be even harder. But... you belong on this grass."
-        
-        menu:
-            "How do you cement this shifting dynamic?"
-            
-            "Acknowledge the partnership":
-                $ teamwork += 2
-                $ coach_opinion += 1
-                player "We win matches together, Afiq. Let's make sure the scouts have nothing bad to say about either of us."
-                narrator "{cps=60}Afiq nods quietly, a silent understanding forming between the two top talents in the academy.{/cps}"
-                    
-            "Keep the competitive edge sharp":
-                $ confidence += 2
-                player "Just make sure you keep making those runs. I’ll keep making you look good."
-                captain "Heh. Don't flatter yourself. Just don't drop your level."
-        
-        hide captain with dissolve
-
-    else:
-        show captain at center with dissolve
-        narrator "{cps=60}The moment Coach Rahman steps out to talk to the referee, Afiq slams his boot against the floor, glaring right at you.{/cps}"
-        captain "You completely compromised us out there! Your ego is going to cost half this squad their registration spots!"
-        
-        menu:
-            "The locker room goes dead silent. How do you respond?"
-                
-            "Stand your ground and confront him":
-                $ confidence += 2
-                $ pressure += 2
-                $ teamwork -= 1
-                player "Stop crying, Afiq! Football is about taking risks. If you can't handle the pressure of a real game, go back to the youth team."
-                narrator "{cps=60}Afiq steps up, jaw clenched, before a senior player steps between you two, pushing you both back.{/cps}"
-                captain "You won't last the month here. Mark my words."
-                    
-            "Take accountability but refuse to back down":
-                $ coach_opinion += 1
-                $ pressure += 1
-                player "The execution was poor, and I take responsibility for the mistake. But I'm not going to sit here and let you blame the entire match on one play."
-                captain "Then fix your game before you step back onto my pitch."
-        
-        hide captain with dissolve
-
-    narrator "{cps=60}Before the internal fighting can escalate any further, the heavy wooden door swings open.{/cps}"
-    
-
-label scouting_evaluation:
-    show maya_chen at right with dissolve
-    show coach at left with dissolve
-    
-    narrator "{cps=60}Coach Rahman enters, followed closely by Maya Chen, the chief scout. Maya is looking directly at her tablet, analyzing the match data.{/cps}"
-    
-    if first_match_result in ["assist", "through ball assist", "defensive stand", "one on one save"]:
-        scout "The chemistry in the second half was fascinating, Coach. [player_name] and Afiq showed real tactical synergy under pressure."
-        coach "True. Talent wins training drills, but maturity wins league cups. They adapted."
-    else:
-        scout "The data shows a massive tactical disconnect in the final third. The friction between [player_name] and Afiq is actively damaging our shape."
-        coach "They are playing two different games on the same pitch. If they don't iron out this pride, one of them will be watching the showcase from the stands."
-
-    scout "[player_name], I'm finalizing my report for the senior team representatives."
-    scout "Individual brilliance catches our eye, but internal toxicity ruins clubs. How do you plan to handle the internal competition here?"
-
-    menu:
-        "Answer Maya Chen's evaluation question:"
-            
-        "I'm here to build a team, not an empire. (Focus on Teamwork)":
-            $ teamwork += 2
-            $ coach_opinion += 2
-            $ reputation += 1
-            scout "A mature answer. The clubs I represent value players who elevate those around them."
-            narrator "{cps=60}Coach Rahman nods approvingly, crossing his arms with a slight smile.{/cps}"
-
-        "I'm here to be the best. Competition makes us both sharper. (Focus on Confidence)":
-            $ confidence += 3
-            $ pressure += 1
-            $ reputation += 2
-            scout "Spoken like a true forward-thinking asset. Just ensure your ambition doesn't become a liability."
-            narrator "{cps=60}Coach Rahman narrows his eyes. He respects the drive, but the warning remains unsaid.{/cps}"
-
-    hide maya_chen
-    hide coach
-    with dissolve
-    
-    jump next_chapter_setup
-
 label first_match_wrap:
     $ skill = clamp_stat(skill)
     $ coach_opinion = clamp_stat(coach_opinion)
@@ -1218,12 +1184,13 @@ label career_decision:
     jump advanced_match
 
 label advanced_match:
-    scene bg match_stadium_night
-    with dissolve
+    scene bg tunnel with dissolve
     
     if career_path == "transfer":
         narrator "{cps=60}At Northbridge, you are introduced as the pivot player: not simply a casual signing, but a player expected to tilt the match instantly.{/cps}"
         narrator "{cps=60}The bigger club is louder, faster, and less patient. The opponent presses like a machine because they know the cameras are watching your debut.{/cps}"
+
+        scene bg out_tunnel with dissolve
 
         narrator "{cps=60}As you walk out onto the pitch, you spot a familiar face in the crowd near the tunnel. Afiq is sitting in the stands with an official academy tracking folder, taking notes.{/cps}"
         narrator "{cps=60}He catches your eye and raises his chin. He didn't come to cheer you on; he came to see if the big league is going to swallow you whole.{/cps}"
@@ -1256,6 +1223,7 @@ label advanced_match:
         jump advanced_goalkeeper
 
 label advanced_attacker:
+    scene bg advanced_match with dissolve
     narrator "{cps=60}The match becomes a fierce psychological and tactical duel between your direct movement and their defensive line. Thrive here, and the scouting story changes completely.{/cps}"
     
     menu:
@@ -1481,7 +1449,7 @@ label advanced_match_wrap:
     jump final_outcome
 
 label final_outcome:
-    scene bg career_outcome_celebration
+    scene bg final_celebration
     with fade
  
     hide screen career_hud
@@ -1506,9 +1474,21 @@ label final_outcome:
         $ final_title = "Superstar Arrival: Shockwaves Back Home"
         $ final_message = "The massive transfer to Northbridge didn't swallow you whole. You successfully transformed into their definitive pivot player, dominating the top-tier league under global spotlight."
         
+        scene bg press_conference with dissolve
         narrator "{cps=60}As flashing cameras surround you at the Northbridge press conference, your phone buzzes violently in your pocket with an unexpected text message from back home.{/cps}"
-        narrator "{cps=60}It's from Afiq: 'I watched your debut goal on the national sports networks tonight. The academy boys are completely losing their minds.'{/cps}"
-        narrator "{cps=60}The text continues: 'You actually leapfrogged past me and made it to the big stage. Don't dare look back now, street-boy. Make sure the world never forgets how hard we had to fight each other to get here.'{/cps}"
+        $ phone_chat_reset()
+        show screen phone_chat("Afiq", "online")
+        $ phone_chat_add("them", "I watched your debut goal on the national sports networks tonight.")
+        pause
+        $ phone_chat_add("them", "The academy boys are completely losing their minds.")
+        pause
+        $ phone_chat_add("them", "You actually leapfrogged past me and made it to the big stage.")
+        pause
+        $ phone_chat_add("them", "Don't dare look back now, street-boy. Make sure the world never forgets how hard we had to fight each other to get here.")
+        pause
+        $ phone_chat_add("me", "I won't. See you at the top, Afiq.")
+        pause
+        hide screen phone_chat
 
     elif final_score >= 13:
         $ final_title = "Breakthrough Prospect: The Cold Truce"
