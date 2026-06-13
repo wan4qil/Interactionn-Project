@@ -332,6 +332,7 @@ label academy_gate:
     narrator "{cps=60}Tonight, you walk through the academy gate for the first time.{/cps}"
     scene bg academy_gate_front
     with dissolve
+    show main_player_front at center, scale_up with dissolve
     narrator "{cps=60}Beyond it are floodlights, scouts, contracts, rival players, dressing-room politics, and the quiet fear that maybe the dream is bigger than you.{/cps}"
     scene bg training_ground
     with dissolve
