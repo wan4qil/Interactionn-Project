@@ -6,18 +6,13 @@ define captain = Character("Afiq", color="#ffd166")
 define analyst = Character("Performance Analyst", color="#d7b7ff")
 define fade_to_black = Fade(0.5, 0.5, 0.5, color="#000")
 
-
-image bg stadium_dawn = "images/stadium_dawn.png"
 image bg opening_stadium = "images/opening_stadium.png"
 image bg stadium_day = "images/stadium_day.png"
 image bg training_ground = "images/training_ground.png"
 image bg training_ground_real = "images/training_ground_real.png"
-image bg match_night = "images/match_night.png"
 image bg match_stadium_night = "images/match_stadium_night.png"
-image bg office = "images/office.png"
-image bg coach_office_real = "images/coach_office_real.png"
+image bg coach_office = "images/coach_office.png"
 image bg transfer_meeting_room = "images/transfer_meeting_room.png"
-image bg finale = "images/finale.png"
 image bg career_outcome_celebration = "images/career_outcome_celebration.png"
 image maya_chen = "images/maya_chen.png"
 image bg training_ground_empty_dawn = "images/training_ground_empty_dawn.png"
@@ -30,6 +25,9 @@ image main_player_behind = "images/main_player_behind.png"
 image bg academy_pitchside_night = "images/academy_pitchside_night.png"
 image top_bar = Solid("#000")
 image bottom_bar = Solid("#000")
+image bg training_drills = "images/training_drills.png"
+image bg dressing_room = "images/dressing_room.png"
+image bg players_staring = "images/players_staring.png"
 
 show top_bar:
     xpos 0
@@ -320,7 +318,7 @@ label academy_gate:
     scene bg academy_gate_front
     with dissolve
     narrator "{cps=60}Beyond it are floodlights, scouts, contracts, rival players, dressing-room politics, and the quiet fear that maybe the dream is bigger than you.{/cps}"
-    scene bg academy_pitchside_night
+    scene bg training_ground
     with dissolve
     show captain at right with dissolve
     captain "You are the new one, right? Do not look so shocked. Everyone gets nervous the first day."
@@ -348,6 +346,9 @@ label academy_gate:
     captain "If you rise, someone else falls. I've spent three years bleeding for this academy. I'm not letting some street-baller take my spot in the showcase."
 
     narrator "The surrounding academy players stop their drills, turning their heads to watch the confrontation. The pressure in your chest tightens like a vice."
+
+    scene bg players_staring
+    with dissolve
 
     menu:
         "How do you handle Afiq's open hostility?"
@@ -384,7 +385,7 @@ label academy_gate:
     jump choose_position
 
 label choose_position:
-    scene bg training_ground_real
+    scene bg training_drills
     with dissolve
 
     coach "Before I judge your level, I need to know your football mind. Where do you see the game from?"
@@ -430,7 +431,7 @@ label choose_position:
     jump training_decision
 
 label training_decision:
-    scene bg training_ground_real
+    scene bg training_drills
     with dissolve
 
     narrator "{cps=60}The first elite training session is faster than expected. Players sprint, collide, recover, shout, reset, and sprint again.{/cps}"
@@ -541,7 +542,7 @@ label training_decision:
     jump first_match
 
 label first_match:
-    scene bg match_stadium_night
+    scene bg dressing_room
     with dissolve
 
     if not first_start:
@@ -1004,7 +1005,7 @@ label first_match_wrap:
     jump coach_feedback
 
 label coach_feedback:
-    scene bg coach_office_real
+    scene bg coach_office
     with dissolve
     
     coach "Sit down, [player_name]. Close the door behind you."
