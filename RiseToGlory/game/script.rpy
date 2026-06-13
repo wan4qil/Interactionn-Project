@@ -29,6 +29,7 @@ image bg training_drills = "images/training_drills.png"
 image bg dressing_room = "images/dressing_room.png"
 image bg players_staring = "images/players_staring.png"
 image afiq = "images/afiq.png"
+image captain = "images/afiq.png"
 image main_player_front = "images/main_player_front.png"
 image coach_rahman = "images/coach_rahman.png"
 image main_talking = "images/main_talking.png"
@@ -184,7 +185,7 @@ screen project_main_menu():
 screen project_instructions():
     tag menu
 
-    add "images/office.png"
+    add "images/coach_office.png"
     add Solid("#020509aa")
 
     frame:
@@ -1423,8 +1424,19 @@ label final_outcome:
         $ final_message = "The massive transfer to Northbridge didn't swallow you whole. You successfully transformed into their definitive pivot player, dominating the top-tier league under global spotlight."
         
         narrator "{cps=60}As flashing cameras surround you at the Northbridge press conference, your phone buzzes violently in your pocket with an unexpected text message from back home.{/cps}"
-        narrator "{cps=60}It's from Afiq: 'I watched your debut goal on the national sports networks tonight. The academy boys are completely losing their minds.'{/cps}"
-        narrator "{cps=60}The text continues: 'You actually leapfrogged past me and made it to the big stage. Don't dare look back now, street-boy. Make sure the world never forgets how hard we had to fight each other to get here.'{/cps}"
+        $ phone_chat_reset()
+        show screen phone_chat("Afiq", "online")
+        $ phone_chat_add("them", "I watched your debut goal on the national sports networks tonight.")
+        pause
+        $ phone_chat_add("them", "The academy boys are completely losing their minds.")
+        pause
+        $ phone_chat_add("them", "You actually leapfrogged past me and made it to the big stage.")
+        pause
+        $ phone_chat_add("them", "Don't dare look back now, street-boy. Make sure the world never forgets how hard we had to fight each other to get here.")
+        pause
+        $ phone_chat_add("me", "I won't. See you at the top, Afiq.")
+        pause
+        hide screen phone_chat
 
     elif final_score >= 13:
         $ final_title = "Breakthrough Prospect: The Cold Truce"
