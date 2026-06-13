@@ -22,8 +22,6 @@ image bg career_outcome_celebration = "images/career_outcome_celebration.png"
 image maya_chen = "images/maya_chen.png"
 image bg training_ground_empty_dawn = "images/training_ground_empty_dawn.png"
 image main_player = "images/main_player.png"
-<<<<<<< Updated upstream
-=======
 image bg academy_gate_behind = "images/academy_gate_night.png"
 image bg academy_gate_front = "images/academy_gate_front.png"
 image bg hometown_street = "images/hometown_street.png"
@@ -46,7 +44,6 @@ show bottom_bar:
     xsize 1280
     ysize 100
     linear 0.5 ypos 620
->>>>>>> Stashed changes
 
 transform scale_up:
     zoom 0.6
@@ -307,21 +304,18 @@ label reset_story:
     jump introduction
 
 label introduction:
-<<<<<<< Updated upstream
     scene bg opening_stadium
-=======
     scene bg hometown_street
     with fade_to_black
     show main_player_hometown at center, scale_up
->>>>>>> Stashed changes
+    scene bg hometown_street
+    show main_player_hometown at center, scale_up
     with fade
 
     narrator "You are [player_name], a young footballer who grew up chasing a torn ball across narrow streets, empty car parks, and one stubborn little field behind the school."
     narrator "Your boots are not new. Your family still checks the price of every away trip. But when the ball comes to you, the noise of ordinary life disappears."
-<<<<<<< Updated upstream
     narrator "Tonight, you walk through the academy gate for the first time. Beyond it are floodlights, scouts, contracts, rival players, dressing-room politics, and the quiet fear that maybe the dream is bigger than you."
     captain "You are the new one, right? [player_name]. Do not look so shocked. Everyone gets nervous the first day."
-=======
     scene bg academy_gate_behind
     with fade
     show main_player_behind at center, scale_up
@@ -332,7 +326,7 @@ label introduction:
     scene bg academy_pitchside_night
     with dissolve
     captain "You are the new one, right? Afiq. Do not look so shocked. Everyone gets nervous the first day."
->>>>>>> Stashed changes
+    teammate "You are the new one, right? Afiq. Do not look so shocked. Everyone gets nervous the first day."
     player "I thought getting here would feel like the finish line."
     coach "It is not the finish line, [player_name]. It is the first whistle."
     coach "Talent brought you to this field. Discipline decides whether you stay. Courage decides whether anyone remembers you."
