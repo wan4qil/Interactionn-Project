@@ -290,6 +290,7 @@ label introduction:
     narrator "Beyond it are floodlights, scouts, contracts, rival players, dressing-room politics, and the quiet fear that maybe the dream is bigger than you."
     scene bg academy_pitchside_night
     with dissolve
+<<<<<<< Updated upstream
     teammate "You are the new one, right? Afiq. Do not look so shocked. Everyone gets nervous the first day."
     player "I thought getting here would feel like the finish line."
     coach "It is not the finish line, [player_name]. It is the first whistle."
