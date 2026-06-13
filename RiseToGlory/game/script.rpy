@@ -416,6 +416,7 @@ label choose_position:
     scene bg training_drills
     with dissolve
 
+    show coach_rahman at center, scale_down with dissolve
     coach "Before I judge your level, I need to know your football mind. Where do you see the game from?"
 
     menu:
