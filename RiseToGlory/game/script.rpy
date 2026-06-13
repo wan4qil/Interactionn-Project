@@ -32,6 +32,9 @@ image afiq = "images/afiq.png"
 image main_player_front = "images/main_player_front.png"
 image coach_rahman = "images/coach_rahman.png"
 image main_talking = "images/main_talking.png"
+image bg first_match = "images/first_match.png"
+image bg players_celebrate = "images/players_celebrate.png"
+image bg gooaall = "images/gooaall.png"
 
 show top_bar:
     xpos 0
@@ -92,6 +95,33 @@ default first_start = False
 default evaluation_notes = []
 
 init python:
+    import math
+
+    class DispTextStyle():
+        """Tracks active text style tags so styled characters explode correctly."""
+        def __init__(self):
+            self.tags = []
+
+        def add_tags(self, tag):
+            if tag.startswith("/"):
+                clean = tag[1:]
+                if clean in self.tags:
+                    self.tags.remove(clean)
+                    return True
+            else:
+                self.tags.append(tag)
+                return True
+            return False
+
+        def apply_style(self, char):
+            result = ""
+            for t in self.tags:
+                result += "{" + t + "}"
+            result += char
+            for t in reversed(self.tags):
+                result += "{/" + t + "}"
+            return result
+
     def clamp_stat(value):
         return max(-3, min(10, value))
 
@@ -452,6 +482,9 @@ label training_decision:
     with dissolve
 
     narrator "{cps=60}The first elite training session is faster than expected. Players sprint, collide, recover, shout, reset, and sprint again.{/cps}"
+    scene black with fade
+    $ renpy.movie_cutscene("videos/training.webm", stop_music=True)
+    scene bg training_drills with fade
     coach "Today is not about looking talented. Today is about proving you can repeat good decisions when your lungs are burning."
 
     narrator "{cps=60}The squad splits into a heavy possession grid. You find your rhythm, tracking the ball cleanly, until a shadow cuts across your path.{/cps}"
@@ -587,22 +620,20 @@ label first_match:
             $ coach_opinion += 1
             player "The coach made the call, not me. But we need a win tonight. Let's put this aside until full-time."
             narrator "{cps=60}Afiq looks at your extended hand, scowls, and ignores it—but his posture loosens slightly.{/cps}"
-            captain "Don't mistake my silence for friendship, street-boy. Just don't ruin my stats out there."
-                
-    hide captain with dissolve
-    narrator "{cps=60}By the 83rd minute, the match is tied. Rain shines under the floodlights. Every pass sounds louder than it should.{/cps}"
+            captain "Don't mistake my silence for friendship, street-boy. Just don't ruin my stats out there."        
 
-    if position == "Attacker":
-        narrator "{cps=60}A long diagonal drops behind the full-back. You bring it down inside the box. The goalkeeper steps forward, and Afiq screams for the square pass.{/cps}"
+    hide captain with dissolve
+
+    scene bg first_match with dissolve    
+    narrator "{cps=60}By the 83rd minute, the match is tied. Every pass sounds louder than it should.{/cps}"
+
+    if position == "Attacker":        
         jump first_match_attacker
     elif position == "Midfielder":
-        narrator "{cps=60}You receive between the lines with one touch to turn. Afiq is sprinting behind the centre-backs, but the opponent's midfield is tired and the game is ready to be controlled.{/cps}"
         jump first_match_midfielder
     elif position == "Defender":
-        narrator "{cps=60}The opponent breaks down your side. Their winger cuts inside, their striker darts across your shoulder, and one wrong step opens the goal.{/cps}"
         jump first_match_defender
     else:
-        narrator "{cps=60}A loose back pass slows in the wet grass. Their striker reaches it first. Suddenly it is just you, the attacker, and the sound of the crowd rising.{/cps}"
         jump first_match_goalkeeper
 
 label bench_arc:
@@ -680,9 +711,10 @@ label bench_arc:
     jump coach_feedback
 
 label first_match_attacker:
-    narrator "{cps=60}The match reaches a boiling point. The stadium lights cut through the heavy rain.{/cps}"
+    narrator "{cps=60}The match reaches a boiling point.{/cps}"
     narrator "{cps=60}A long diagonal pass drops cleanly behind the opponent's full-back . You bring it down inside the penalty box with a sharp first touch .{/cps}"
     narrator "{cps=60}The goalkeeper rushes forward, trying to narrow your angle . Out of the corner of your eye, you see Afiq sprinting into space.{/cps}"
+    $ renpy.movie_cutscene("videos/first_match_situation.webm", stop_music = True)
     captain "[player_name]! Square it! Square the damn ball!" 
 
     menu:
@@ -720,7 +752,10 @@ label first_match_attacker:
                 $ confidence += 2 
                 $ fan_mood += 2 
                 narrator "{cps=60}You block out his shouting. You strike the ball early, catching the goalkeeper completely off guard .{/cps}"
-                narrator "{cps=60}The ball flashes across the wet grass and kisses the inside of the far post. Goal! {/cps}"
+                scene bg gooaall with dissolve
+                narrator "{explode=1.5}GOOOOOOOOOOOOAAAAAAAALLLLLLLLLL!!!!!! {/explode}"
+                
+                scene bg players_celebrate with dissolve
                 coach "That is the kind of courage scouts remember." 
                 
                 show captain at center with dissolve
