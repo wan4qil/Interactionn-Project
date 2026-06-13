@@ -53,6 +53,10 @@ image afiq_unsatisfied = "images/afiq_unsatisfied.png"
 image bg players_training = "images/players_training.png"
 image bg one_on_one = "images/one_on_one.png"
 image bg press_conference = "images/press_conference.png"
+image bg tunnel = "images/tunnel.png"
+image bg out_tunnel = "images/tunnel.png"
+image bg advanced_match = "images/advanced_match.png"
+image bg final_celebration = "images/final_celebration.png"
 
 show top_bar:
     xpos 0
@@ -1086,7 +1090,7 @@ label career_decision:
     scene bg transfer_meeting_room
     with dissolve
     
-    show maya_chen at slide_in_right
+    show maya_chen at scout_right
     with dissolve
     
     narrator "{cps=60}The heavy door of the transfer room shuts, cutting off the noise of the boots in the corridor. Maya Chen looks up from her tablet, sliding a sleek folder across the polished table.{/cps}"
@@ -1158,12 +1162,13 @@ label career_decision:
     jump advanced_match
 
 label advanced_match:
-    scene bg match_stadium_night
-    with dissolve
+    scene bg tunnel with dissolve
     
     if career_path == "transfer":
         narrator "{cps=60}At Northbridge, you are introduced as the pivot player: not simply a casual signing, but a player expected to tilt the match instantly.{/cps}"
         narrator "{cps=60}The bigger club is louder, faster, and less patient. The opponent presses like a machine because they know the cameras are watching your debut.{/cps}"
+
+        scene bg out_tunnel with dissolve
 
         narrator "{cps=60}As you walk out onto the pitch, you spot a familiar face in the crowd near the tunnel. Afiq is sitting in the stands with an official academy tracking folder, taking notes.{/cps}"
         narrator "{cps=60}He catches your eye and raises his chin. He didn't come to cheer you on; he came to see if the big league is going to swallow you whole.{/cps}"
@@ -1196,6 +1201,7 @@ label advanced_match:
         jump advanced_goalkeeper
 
 label advanced_attacker:
+    scene bg advanced_match with dissolve
     narrator "{cps=60}The match becomes a fierce psychological and tactical duel between your direct movement and their defensive line. Thrive here, and the scouting story changes completely.{/cps}"
     
     menu:
@@ -1421,7 +1427,7 @@ label advanced_match_wrap:
     jump final_outcome
 
 label final_outcome:
-    scene bg career_outcome_celebration
+    scene bg final_celebration
     with fade
  
     hide screen career_hud
