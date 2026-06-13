@@ -312,8 +312,9 @@ label introduction:
 
     narrator "You are [player_name], a young footballer who grew up chasing a torn ball across narrow streets, empty car parks, and one stubborn little field behind the school."
     narrator "Your boots are not new. Your family still checks the price of every away trip. But when the ball comes to you, the noise of ordinary life disappears."
-    narrator "Tonight, you walk through the academy gate for the first time. Beyond it are floodlights, scouts, contracts, rival players, dressing-room politics, and the quiet fear that maybe the dream is bigger than you."
-    captain "You are the new one, right? [player_name]. Do not look so shocked. Everyone gets nervous the first day."
+    jump academy_gate
+    
+label academy_gate:
     scene bg academy_gate_behind
     with fade
     show main_player_behind at center, scale_up
@@ -323,15 +324,13 @@ label introduction:
     narrator "Beyond it are floodlights, scouts, contracts, rival players, dressing-room politics, and the quiet fear that maybe the dream is bigger than you."
     scene bg academy_pitchside_night
     with dissolve
-    captain "You are the new one, right? Afiq. Do not look so shocked. Everyone gets nervous the first day."
-    teammate "You are the new one, right? Afiq. Do not look so shocked. Everyone gets nervous the first day."
+    show captain at right with dissolve
+    captain "You are the new one, right? Do not look so shocked. Everyone gets nervous the first day."
     player "I thought getting here would feel like the finish line."
     coach "It is not the finish line, [player_name]. It is the first whistle."
     coach "Talent brought you to this field. Discipline decides whether you stay. Courage decides whether anyone remembers you."
 
     $ add_note("Target users receive a simple goal immediately: guide a player toward a professional career.")
-
-# --- NEW DRAMA EXPANSION BEGINS HERE ---
 
     narrator "Coach Rahman walks away, his whistle gleaming under the floodlights. The moment he is out of earshot, the quiet evening air shatters."
 
