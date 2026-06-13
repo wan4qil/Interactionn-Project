@@ -46,6 +46,10 @@ image afiq_after_tackle = "images/afiq_after_tackle.png"
 image main_push_afiq = "images/main_push_afiq.png"
 image coach_rahman_mad = "images/coach_rahman_mad.png"
 image bg players_training = "images/players_training.png"
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 show top_bar:
     xpos 0
