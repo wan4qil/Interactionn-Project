@@ -36,6 +36,12 @@ image afiq_smirk = "images/afiq_smirk.png"
 image afiq_bib = "images/afiq_bib.png"
 image main_normal_face = "images/main_normal_face.png"
 image main_control = "images/main_control.png"
+image bg academy_training_ground = "images/academy_training_ground.png"
+image main_training = "images/main_training.png"
+image afiq_tackled = "images/afiq_tackled.png"
+image afiq_after_tackle = "images/afiq_after_tackle.png"
+image main_push_afiq = "images/main_push_afiq.png"
+image coach_rahman_mad = "images/coach_rahman_mad.png"
 
 show top_bar:
     xpos 0
@@ -56,6 +62,9 @@ transform scale_up:
 
 transform scale_down:
     zoom 0.6
+
+transform scale_coach_mad:
+    zoom 0.4
 
 transform scout_right:
     xalign 0.84
@@ -459,17 +468,23 @@ label choose_position:
     jump training_decision
 
 label training_decision:
-    scene bg training_drills
+    scene bg academy_training_ground
     with dissolve
 
+    show coach_rahman at center, scale_down with dissolve
     narrator "{cps=60}The first elite training session is faster than expected. Players sprint, collide, recover, shout, reset, and sprint again.{/cps}"
     coach "Today is not about looking talented. Today is about proving you can repeat good decisions when your lungs are burning."
 
+    hide coach_rahman with dissolve
+    show main_training at center, scale_up with dissolve
     narrator "{cps=60}The squad splits into a heavy possession grid. You find your rhythm, tracking the ball cleanly, until a shadow cuts across your path.{/cps}"
     narrator "{cps=60}It's Afiq. He isn't looking at the ball; his eyes are locked entirely on your ankles.{/cps}"
+    hide main_training with dissolve
+    show afiq_tackled at center, scale_down with dissolve
     narrator "{cps=60}Before you can pivot, he lunges in with a fierce, borderline illegal sliding tackle that sends you crashing violently into the turf.{/cps}"
 
-    show captain at center with dissolve
+    hide afiq_tackled with dissolve
+    show afiq_after_tackle at center, scale_down with dissolve
     captain "Welcome to the academy, street-boy. Get up. The game doesn't stop because you're on the floor."
 
     menu:
@@ -479,8 +494,11 @@ label training_decision:
             $ pressure += 2
             $ coach_opinion -= 1
             $ teamwork -= 1
+            hide afiq_after_tackle with dissolve
+            show main_push_afiq at center, scale_up with dissolve
             player "Are you trying to break my leg before the season even starts?!"
-            narrator "{cps=60}You shove Afiq square in the chest. He smiles maliciously, stepping into your space as the squad rushes to separate you.{/cps}"
+            narrator "{cps=60}You shove Afiq square in the chest.{/cps}"
+            show coach_rahman_mad at right, scale_coach_mad with dissolve
             coach "[player_name]! Afiq! Keep your hands to yourselves or both of you can pack your bags right now!"
             narrator "{cps=60}The coach writes something sharp on his clipboard. Your temper just cost you points with the staff.{/cps}"
 
