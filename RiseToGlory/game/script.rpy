@@ -307,6 +307,11 @@ label introduction:
     scene bg hometown_street
     show main_player_hometown at center, scale_up
     with fade
+    scene bg opening_stadium
+    scene bg hometown_street
+    with fade_to_black
+    show main_player_hometown at center, scale_up
+
 
     narrator "{cps=60}You are [player_name], a young footballer who grew up chasing a torn ball across narrow streets, empty car parks, and one stubborn little field behind the school.{/cps}"
     narrator "{cps=60}Your boots are not new. Your family still checks the price of every away trip. But when the ball comes to you, the noise of ordinary life disappears.{/cps}"
