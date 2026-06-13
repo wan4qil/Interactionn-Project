@@ -28,8 +28,32 @@ image bg hometown_street = "images/hometown_street.png"
 image main_player_hometown = "images/main_player_hometown.png"
 image main_player_behind = "images/main_player_behind.png"
 image bg academy_pitchside_night = "images/academy_pitchside_night.png"
+<<<<<<< Updated upstream
+=======
+image top_bar = Solid("#000")
+image bottom_bar = Solid("#000")
+image afiq = "images/afiq.png"
+image main_player_front = "images/main_player_front.png"
+
+show top_bar:
+    xpos 0
+    ypos -100
+    xsize 1280
+    ysize 100
+    linear 0.5 ypos 0
+
+show bottom_bar:
+    xpos 0
+    ypos 720
+    xsize 1280
+    ysize 100
+    linear 0.5 ypos 620
+>>>>>>> Stashed changes
 
 transform scale_up:
+    zoom 0.6
+
+transform scale_down:
     zoom 0.6
 
 transform scout_right:
@@ -277,7 +301,10 @@ label reset_story:
 label introduction:
     scene bg hometown_street
     show main_player_hometown at center, scale_up
+<<<<<<< Updated upstream
     with fade
+=======
+>>>>>>> Stashed changes
 
     narrator "You are [player_name], a young footballer who grew up chasing a torn ball across narrow streets, empty car parks, and one stubborn little field behind the school."
     narrator "Your boots are not new. Your family still checks the price of every away trip. But when the ball comes to you, the noise of ordinary life disappears."
@@ -287,11 +314,16 @@ label introduction:
     narrator "Tonight, you walk through the academy gate for the first time."
     scene bg academy_gate_front
     with dissolve
+    show main_player_front at center, scale_up
     narrator "Beyond it are floodlights, scouts, contracts, rival players, dressing-room politics, and the quiet fear that maybe the dream is bigger than you."
     scene bg academy_pitchside_night
     with dissolve
 <<<<<<< Updated upstream
     teammate "You are the new one, right? Afiq. Do not look so shocked. Everyone gets nervous the first day."
+=======
+    show afiq at left, scale_down with dissolve
+    captain "You are the new one, right? Do not look so shocked. Everyone gets nervous the first day."
+>>>>>>> Stashed changes
     player "I thought getting here would feel like the finish line."
     coach "It is not the finish line, [player_name]. It is the first whistle."
     coach "Talent brought you to this field. Discipline decides whether you stay. Courage decides whether anyone remembers you."
