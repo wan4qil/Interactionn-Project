@@ -32,6 +32,7 @@ image afiq = "images/afiq.png"
 image captain = "images/afiq.png"
 image main_player_front = "images/main_player_front.png"
 image coach_rahman = "images/coach_rahman.png"
+image coach_rahman_excited = "images/coach_rahman_excited.png"
 image main_talking = "images/main_talking.png"
 image bg first_match = "images/first_match.png"
 image bg players_celebrate = "images/players_celebrate.png"
@@ -52,6 +53,10 @@ image afiq_football = "images/afiq_football.png"
 image afiq_unsatisfied = "images/afiq_unsatisfied.png"
 image bg players_training = "images/players_training.png"
 image bg one_on_one = "images/one_on_one.png"
+image coach_rahman_excited = "images/coach_rahman_excited.png"
+image afiq_disbelieve = "images/afiq_disbelieve.png"
+image main_player_smirk = "images/main_player_smirk.png"
+image coach_rahman_crosshand = "images/coach_rahman_crosshand.png"
 image bg press_conference = "images/press_conference.png"
 image bg tunnel = "images/tunnel.png"
 image bg out_tunnel = "images/tunnel.png"
@@ -71,6 +76,9 @@ show bottom_bar:
     xsize 1280
     ysize 100
     linear 0.5 ypos 620
+
+transform scale_main_smirk:
+    zoom 1
 
 transform scale_analyst:
     xalign 0.2
@@ -815,15 +823,26 @@ label first_match_attacker:
                 $ confidence += 2 
                 $ fan_mood += 2 
                 narrator "{cps=60}You block out his shouting. You strike the ball early, catching the goalkeeper completely off guard .{/cps}"
+                narrator "{cps=60}The ball flashes across the wet grass and kisses the inside of the far post. Goal! {/cps}"
+                scene bg gooaall with dissolve
+                narrator "{explode=1.5}GOOOOOOOOOOOOAAAAAAAALLLLLLLLLL!!!!!! {/explode}"
                 scene bg gooaall with dissolve
                 narrator "{explode=1.5}GOOOOOOOOOOOOAAAAAAAALLLLLLLLLL!!!!!! {/explode}"
                 
                 scene bg players_celebrate with dissolve
                 coach "That is the kind of courage scouts remember." 
                 
-                show captain at center with dissolve
+                scene bg players_celebrate with dissolve
+
+                show coach_rahman_excited at center, scale_down with dissolve
+                coach "That is the kind of courage scouts remember." 
+                hide coach_rahman_excited with dissolve
+                show afiq_disbelieve at center, scale_down with dissolve
                 narrator "{cps=60}Afiq jogs over, his mouth slightly open in disbelief. He wanted the spotlight, but your skill silenced him.{/cps}"
+                hide afiq_disbelieve with dissolve
+                show main_player_smirk at center, scale_main_smirk with dissolve
                 player "Told you my mouth wasn't the only thing that could save me."
+                show afiq_unsatisfied at right, scale_down with dissolve
                 captain "Hmph. Lucky strike. Do it again next week, then we'll talk."
             else:
                 $ first_match_result = "miss" 
@@ -837,7 +856,7 @@ label first_match_attacker:
                 captain "Selfish! Absolute street-ball garbage! You choked because your ego is bigger than the team!"
                 narrator "{cps=60}Afiq aggressively gets into your face, screaming over the sound of the rain as you look down at the grass.{/cps}"
 
-    hide captain with dissolve
+    hide afiq_disbelieve with dissolve
 
     jump first_match_wrap
 
@@ -1026,7 +1045,9 @@ label first_match_wrap:
 label coach_feedback:
     scene bg coach_office
     with dissolve
-    
+    show coach_rahman_crosshand at right, scale_down with dissolve
+    show analyst at right, scale_down with dissolve
+    show main_asking at left, scale_down with dissolve
     coach "Sit down, [player_name]. Close the door behind you."
     narrator "Coach Rahman is sitting behind his heavy wooden desk. Next to him, the Performance Analyst is reviewing training and match telemetry data on a tablet."
     coach "The staff want to review exactly where your career is heading, because right now, your relationship with the squad—and specifically Afiq—is shifting the energy of this academy."
@@ -1091,6 +1112,7 @@ label career_decision:
     with dissolve
     
     show maya_chen at scout_right
+    show maya_chen slide_in_right
     with dissolve
     
     narrator "{cps=60}The heavy door of the transfer room shuts, cutting off the noise of the boots in the corridor. Maya Chen looks up from her tablet, sliding a sleek folder across the polished table.{/cps}"
