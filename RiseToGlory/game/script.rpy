@@ -32,6 +32,10 @@ image afiq = "images/afiq.png"
 image main_player_front = "images/main_player_front.png"
 image coach_rahman = "images/coach_rahman.png"
 image main_talking = "images/main_talking.png"
+image afiq_smirk = "images/afiq_smirk.png"
+image afiq_bib = "images/afiq_bib.png"
+image main_normal_face = "images/main_normal_face.png"
+image main_control = "images/main_control.png"
 
 show top_bar:
     xpos 0
@@ -320,7 +324,7 @@ label introduction:
     jump academy_gate
     
 transform talking_right:
-    xalign 1.0
+    xalign 1.3
 
 label academy_gate:
     scene bg academy_gate_behind
@@ -346,12 +350,16 @@ label academy_gate:
     hide coach_rahman with dissolve
     narrator "{cps=60}Coach Rahman walks away, his whistle gleaming under the floodlights. The moment he is out of earshot, the quiet evening air shatters.{/cps}"
 
-    
-
+    hide afiq with dissolve
+    show afiq_smirk at left, scale_down with dissolve
     captain "Don't let the old man's speeches get to your head, 'prodigy'."
 
+    hide afiq_smirk with dissolve
+    show afiq_bib at left, scale_down with dissolve
     narrator "Afiq tosses a mud-stained training bib right at your chest. It lands with a heavy, wet thud."
 
+    hide afiq_bib with dissolve
+    show afiq_smirk at left, scale_down with dissolve
     captain "Look around you. Half the guys here were captain of their state teams. The other half have fathers who played in the top tier."
     captain "Then you walk in with boots that look like they survived a war, and suddenly the scouts are whispering?"
 
@@ -365,6 +373,8 @@ label academy_gate:
     scene bg players_staring
     with dissolve
 
+    show afiq_smirk at left, scale_down with dissolve
+    show main_normal_face at right, scale_up with dissolve
     menu:
         "How do you handle Afiq's open hostility?"
 
@@ -374,6 +384,8 @@ label academy_gate:
             $ pressure += 1
             player "Then don't worry about me, Afiq. Worry about keeping up with me on the pitch."
             captain "Arrogant, aren't we? Let's see if that mouth can save you when the tackles start flying."
+            hide main_normal_face with dissolve
+            show main_control at right, scale_up with dissolve
             narrator "{cps=60}You swallow your anger and look past him toward the grass. You've faced tougher critics on concrete streets.{/cps}"
 
         "Fire back and draw a line in the sand":
@@ -393,6 +405,7 @@ label academy_gate:
 
     narrator "{cps=60}Before the tension can boil over into a physical fight, a sharp blast of a whistle echoes across the training ground.{/cps}"
 
+    show coach_rahman at right, scale_down with dissolve
     coach "Afiq! [player_name]! If you two have that much energy to waste, you can run laps until midnight!"
 
     narrator "{cps=60}The crowd scatter instantly, retrieving their footballs as Coach Rahman approaches with a clipboard, his eyes narrowing at the group.{/cps}"
