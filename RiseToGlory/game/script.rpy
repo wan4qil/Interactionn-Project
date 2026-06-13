@@ -52,6 +52,7 @@ image afiq_football = "images/afiq_football.png"
 image afiq_unsatisfied = "images/afiq_unsatisfied.png"
 image bg players_training = "images/players_training.png"
 image bg one_on_one = "images/one_on_one.png"
+image bg press_conference = "images/press_conference.png"
 
 show top_bar:
     xpos 0
@@ -1445,6 +1446,7 @@ label final_outcome:
         $ final_title = "Superstar Arrival: Shockwaves Back Home"
         $ final_message = "The massive transfer to Northbridge didn't swallow you whole. You successfully transformed into their definitive pivot player, dominating the top-tier league under global spotlight."
         
+        scene bg press_conference with dissolve
         narrator "{cps=60}As flashing cameras surround you at the Northbridge press conference, your phone buzzes violently in your pocket with an unexpected text message from back home.{/cps}"
         $ phone_chat_reset()
         show screen phone_chat("Afiq", "online")
