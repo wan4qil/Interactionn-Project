@@ -39,6 +39,16 @@ image afiq_smirk = "images/afiq_smirk.png"
 image afiq_bib = "images/afiq_bib.png"
 image main_normal_face = "images/main_normal_face.png"
 image main_control = "images/main_control.png"
+<<<<<<< Updated upstream
+=======
+image bg academy_training_ground = "images/academy_training_ground.png"
+image main_training = "images/main_training.png"
+image afiq_tackled = "images/afiq_tackled.png"
+image afiq_after_tackle = "images/afiq_after_tackle.png"
+image main_push_afiq = "images/main_push_afiq.png"
+image coach_rahman_mad = "images/coach_rahman_mad.png"
+image bg players_training = "images/players_training.png"
+>>>>>>> Stashed changes
 
 show top_bar:
     xpos 0
@@ -534,6 +544,7 @@ label training_decision:
             narrator "{cps=60}You pull yourself up and offer a brief, professional nod. Coach Rahman watches from a distance, nodding slightly at your maturity.{/cps}"
             coach "Good tracking, Afiq. Clean recovery, [player_name]. Keep the ball moving!"
 
+    scene bg players_training with dissolve
     narrator "{cps=60}The whistle blows again, forcing everyone back into their tactical roles. The air is thick with sweat, rain, and spite.{/cps}"
 
     if position == "Attacker":
