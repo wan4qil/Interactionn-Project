@@ -32,6 +32,8 @@ image top_bar = Solid("#000")
 image bottom_bar = Solid("#000")
 image afiq = "images/afiq.png"
 image main_player_front = "images/main_player_front.png"
+image coach_rahman = "images/coach_rahman.png"
+image main_talking = "images/main_talking.png"
 
 show top_bar:
     xpos 0
@@ -322,6 +324,9 @@ label introduction:
     narrator "{cps=60}Your boots are not new. Your family still checks the price of every away trip. But when the ball comes to you, the noise of ordinary life disappears.{/cps}"
     jump academy_gate
     
+transform talking_right:
+    xalign 1.0
+
 label academy_gate:
     scene bg academy_gate_behind
     with fade
@@ -334,17 +339,19 @@ label academy_gate:
     scene bg academy_pitchside_night
     with dissolve
     show afiq at left, scale_down with dissolve
+    show main_talking at center, scale_up, talking_right with dissolve
     captain "You are the new one, right? Do not look so shocked. Everyone gets nervous the first day."
     player "I thought getting here would feel like the finish line."
+    show coach_rahman at right, scale_down with dissolve
     coach "It is not the finish line, [player_name]. It is the first whistle."
     coach "Talent brought you to this field. Discipline decides whether you stay. Courage decides whether anyone remembers you."
 
     $ add_note("Target users receive a simple goal immediately: guide a player toward a professional career.")
 
+    hide coach_rahman with dissolve
     narrator "{cps=60}Coach Rahman walks away, his whistle gleaming under the floodlights. The moment he is out of earshot, the quiet evening air shatters.{/cps}"
 
-    show main_player at left with dissolve
-    show captain at right with dissolve
+    
 
     captain "Don't let the old man's speeches get to your head, 'prodigy'."
 
