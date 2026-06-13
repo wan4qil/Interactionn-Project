@@ -312,9 +312,6 @@ label introduction:
     scene bg hometown_street
     show main_player_hometown at center, scale_up
     with fade
-    scene bg opening_stadium
-    scene bg hometown_street
-    with fade_to_black
     show main_player_hometown at center, scale_up
 
 
