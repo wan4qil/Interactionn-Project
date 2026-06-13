@@ -4,6 +4,7 @@ define coach = Character("Coach Rahman", color="#58d68d")
 define scout = Character("Maya Chen", color="#79b8ff")
 define captain = Character("Afiq", color="#ffd166")
 define analyst = Character("Performance Analyst", color="#d7b7ff")
+define fade_to_black = Fade(0.5, 0.5, 0.5, color="#000")
 
 
 image bg stadium_dawn = "images/stadium_dawn.png"
@@ -21,6 +22,31 @@ image bg career_outcome_celebration = "images/career_outcome_celebration.png"
 image maya_chen = "images/maya_chen.png"
 image bg training_ground_empty_dawn = "images/training_ground_empty_dawn.png"
 image main_player = "images/main_player.png"
+<<<<<<< Updated upstream
+=======
+image bg academy_gate_behind = "images/academy_gate_night.png"
+image bg academy_gate_front = "images/academy_gate_front.png"
+image bg hometown_street = "images/hometown_street.png"
+image main_player_hometown = "images/main_player_hometown.png"
+image main_player_behind = "images/main_player_behind.png"
+image bg academy_pitchside_night = "images/academy_pitchside_night.png"
+image top_bar = Solid("#000")
+image bottom_bar = Solid("#000")
+
+show top_bar:
+    xpos 0
+    ypos -100
+    xsize 1280
+    ysize 100
+    linear 0.5 ypos 0
+
+show bottom_bar:
+    xpos 0
+    ypos 720
+    xsize 1280
+    ysize 100
+    linear 0.5 ypos 620
+>>>>>>> Stashed changes
 
 transform scale_up:
     zoom 0.6
@@ -29,6 +55,19 @@ transform scout_right:
     xalign 0.84
     yalign 1.0
     zoom 0.72
+
+transform slide_in_left:
+    xpos -500 ypos 0.8        # Start off-screen to the left
+    easein_cubic 0.6 xpos 0.1 # Slide in over 0.6s with ease-out cubic curve
+
+transform slide_in_right:
+    xpos 1500 ypos 0.8        # Start off-screen to the right
+    easein_cubic 0.6 xpos 0.9 # Slide in from the right
+
+transform slide_left:
+    xoffset -500
+    alpha 0.0
+    ease 0.5 xoffset 0 alpha 1.0
 
 default player_name = "Player"
 default position = ""
@@ -240,7 +279,7 @@ label start:
 label reset_story:
     scene bg training_ground_empty_dawn        
     with fade
-    show main_player at center, scale_up
+    show main_player at slide_left
     $ player_name = renpy.input("Enter your player's name:", length=20).strip()
     if player_name == "":
         $ player_name = "Player"
@@ -268,13 +307,32 @@ label reset_story:
     jump introduction
 
 label introduction:
+<<<<<<< Updated upstream
     scene bg opening_stadium
+=======
+    scene bg hometown_street
+    with fade_to_black
+    show main_player_hometown at center, scale_up
+>>>>>>> Stashed changes
     with fade
 
     narrator "You are [player_name], a young footballer who grew up chasing a torn ball across narrow streets, empty car parks, and one stubborn little field behind the school."
     narrator "Your boots are not new. Your family still checks the price of every away trip. But when the ball comes to you, the noise of ordinary life disappears."
+<<<<<<< Updated upstream
     narrator "Tonight, you walk through the academy gate for the first time. Beyond it are floodlights, scouts, contracts, rival players, dressing-room politics, and the quiet fear that maybe the dream is bigger than you."
     captain "You are the new one, right? [player_name]. Do not look so shocked. Everyone gets nervous the first day."
+=======
+    scene bg academy_gate_behind
+    with fade
+    show main_player_behind at center, scale_up
+    narrator "Tonight, you walk through the academy gate for the first time."
+    scene bg academy_gate_front
+    with dissolve
+    narrator "Beyond it are floodlights, scouts, contracts, rival players, dressing-room politics, and the quiet fear that maybe the dream is bigger than you."
+    scene bg academy_pitchside_night
+    with dissolve
+    captain "You are the new one, right? Afiq. Do not look so shocked. Everyone gets nervous the first day."
+>>>>>>> Stashed changes
     player "I thought getting here would feel like the finish line."
     coach "It is not the finish line, [player_name]. It is the first whistle."
     coach "Talent brought you to this field. Discipline decides whether you stay. Courage decides whether anyone remembers you."
@@ -390,22 +448,22 @@ label training_decision:
     coach "Today is not about looking talented. Today is about proving you can repeat good decisions when your lungs are burning."
 
     narrator "The squad splits into a heavy possession grid. You find your rhythm, tracking the ball cleanly, until a shadow cuts across your path."
-    narrator "It's Daniel. He isn't looking at the ball; his eyes are locked entirely on your ankles."
+    narrator "It's Afiq. He isn't looking at the ball; his eyes are locked entirely on your ankles."
     narrator "Before you can pivot, he lunges in with a fierce, borderline illegal sliding tackle that sends you crashing violently into the turf."
 
-    show captain at center with shake
+    show captain at center with dissolve
     captain "Welcome to the academy, street-boy. Get up. The game doesn't stop because you're on the floor."
 
     menu:
-        "How do you react to Daniel's dangerous tackle?"
+        "How do you react to Afiq's dangerous tackle?"
 
         "Spring up instantly and shove him back":
             $ pressure += 2
             $ coach_opinion -= 1
             $ teamwork -= 1
             player "Are you trying to break my leg before the season even starts?!"
-            narrator "You shove Daniel square in the chest. He smiles maliciously, stepping into your space as the squad rushes to separate you."
-            coach "[player_name]! Daniel! Keep your hands to yourselves or both of you can pack your bags right now!"
+            narrator "You shove Afiq square in the chest. He smiles maliciously, stepping into your space as the squad rushes to separate you."
+            coach "[player_name]! Afiq! Keep your hands to yourselves or both of you can pack your bags right now!"
             narrator "The coach writes something sharp on his clipboard. Your temper just cost you points with the staff."
 
         "Dust yourself off silently and offer a mocking smirk":
@@ -414,7 +472,7 @@ label training_decision:
             $ pressure += 1
             narrator "You take your time getting up, slowly brushing the wet grass off your knees. You look him up and down, then flash a calm smirk."
             player "Nice tackle. My little brother hits harder than that, though."
-            narrator "A few teammates choke back a laugh. Daniel's face reddens, your complete composure clearly driving him crazy."
+            narrator "A few teammates choke back a laugh. Afiq's face reddens, your complete composure clearly driving him crazy."
             captain "Let's see if you're still laughing by the end of the drill."
 
         "Accept the challenge calmly and look him in the eyes":
@@ -643,7 +701,7 @@ label first_match_attacker:
                 narrator "The idea is generous, but your execution is sloppy under pressure. The pass is badly underhit ."
                 narrator "An opposing defender slides in, cutting out the ball, and the scoring chance dies instantly ."
                 
-                show captain at center with shake
+                show captain at center with dissolve
                 captain "Are you kidding me?! If you can't make a simple five-yard pass, don't play at this level!"
                 narrator "Afiq throws his arms up in sheer fury, completely disgusted by your mistake."
 
@@ -670,7 +728,7 @@ label first_match_attacker:
                 narrator "You shoot with your heart more than your technique, trying desperately to prove a point to Afiq ."
                 narrator "The shot rises wildly over the crossbar, flying into the stands alongside your pride ."
                 
-                show captain at center with shake
+                show captain at center with dissolve
                 captain "Selfish! Absolute street-ball garbage! You choked because your ego is bigger than the team!"
                 narrator "Afiq aggressively gets into your face, screaming over the sound of the rain as you look down at the grass."
 
@@ -706,7 +764,7 @@ label first_match_midfielder:
                 $ pressure += 1
                 narrator "You force the ball, but your execution is half a second too late. The center-back reads your eyes and cuts it out."
                 
-                show captain at center with shake
+                show captain at center with dissolve
                 captain "Are you blind?! If you're going to try and be a playmaker, learn how to weigh a pass!"
                 narrator "Afiq turns back to yell at you, pointing aggressively at the grass where the ball should have landed."
 
@@ -728,7 +786,7 @@ label first_match_midfielder:
                 $ confidence -= 1
                 narrator "You try to slow the match down, but you panic on the ball. Your touches become safe and stagnant, letting the pressure build."
                 
-                show captain at center with shake
+                show captain at center with dissolve
                 captain "Unbelievable! You completely choked our momentum because you're too scared to pass forward!"
 
     hide captain with dissolve
@@ -763,7 +821,7 @@ label first_match_defender:
                 $ pressure += 2
                 narrator "You lunge a fraction of a second too early. The striker easily drops his shoulder, skips right past you, and unleashes a dangerous shot."
                 
-                show captain at center with shake
+                show captain at center with dissolve
                 captain "What are you diving in for?! Stay on your feet! You just left the entire backline exposed!"
                 narrator "Afiq throws his hands up, instantly shifting the blame entirely onto your mistake."
 
@@ -784,7 +842,7 @@ label first_match_defender:
                 $ confidence -= 1
                 narrator "You drop too deep into your own box, causing panic. You try shouting at Afiq, but your voice wavers and nobody coordinates."
                 
-                show captain at center with shake
+                show captain at center with dissolve
                 captain "Stop yelling and start defending! Your positioning is a total mess!"
 
     hide captain with dissolve
@@ -821,7 +879,7 @@ label first_match_goalkeeper:
                 narrator "You rush out with too much panic. The striker easily touches the ball around your diving frame."
                 narrator "Thankfully, your center-back sprints back and clears it off the goal line just in time."
                 
-                show captain at center with shake
+                show captain at center with dissolve
                 captain "Why did you come flying out like a madman?! You made it way too easy for him to round you!"
                 narrator "Even though it was his terrible pass that caused the crisis, Afiq immediately barks at you to cover his own skin."
 
@@ -842,7 +900,7 @@ label first_match_goalkeeper:
                 $ coach_opinion -= 1
                 narrator "You hesitate, caught in two minds. The striker fires early, and the ball slips beneath your hand, crashing painfully into the net."
                 
-                show captain at center with shake
+                show captain at center with dissolve
                 captain "Unbelievable! We're losing because our keeper doesn't know when to come off his line!"
 
     hide captain with dissolve
@@ -880,7 +938,7 @@ label post_match_debrief:
         hide captain with dissolve
 
     else:
-        show captain at center with shake
+        show captain at center with dissolve
         narrator "The moment Coach Rahman steps out to talk to the referee, Afiq slams his boot against the floor, glaring right at you."
         captain "You completely compromised us out there! Your ego is going to cost half this squad their registration spots!"
         
@@ -1161,9 +1219,9 @@ label advanced_attacker:
                 narrator "You make the runs, but impatience ruins your timing. Offside flags cut your rhythm to pieces."
                 
                 if career_path != "transfer":
-                    show captain at center with shake
+                    show captain at center with dissolve
                     captain "Hold your run! You're starving us of possession by rushing into their trap!"
-                    hide captain with shake
+                    hide captain with dissolve
 
         "Drop between the lines and create chaos for teammates":
             if teamwork + coach_opinion + confidence >= 7:
@@ -1215,9 +1273,9 @@ label advanced_midfielder:
                 narrator "You keep possession, but without enough tactical bravery. The opponent comfortably lets you have harmless sideways passes."
                 
                 if career_path != "transfer":
-                    show captain at center with shake
+                    show captain at center with dissolve
                     captain "Stop passing it backward! Break the lines! We're chasing the game and you're playing it safe!"
-                    hide captain with shake
+                    hide captain with dissolve
 
         "Break lines with risky forward passes":
             if skill + confidence + reputation >= 7:
@@ -1239,9 +1297,9 @@ label advanced_midfielder:
                 narrator "You chase the highlight pass too often. The constant turnovers invite heavy counter-pressure and the coach starts shouting for control."
                 
                 if career_path != "transfer":
-                    show captain at center with shake
+                    show captain at center with dissolve
                     captain "The lane wasn't even open! You're throwing away possession trying to be a hero!"
-                    hide captain with shake
+                    hide captain with dissolve
 
     jump advanced_match_wrap
 
@@ -1270,9 +1328,9 @@ label advanced_defender:
                 narrator "The tactical idea is brave, but the line is completely disconnected. One mistimed step gives their striker wide-open grass."
                 
                 if career_path != "transfer":
-                    show captain at center with shake
+                    show captain at center with dissolve
                     captain "Wake up! If you're going to step up, you have to call it out louder! You left the whole flank exposed!"
-                    hide captain with shake
+                    hide captain with dissolve
 
         "Absorb pressure and win every duel in the box":
             if skill + confidence + loyalty >= 6:
@@ -1319,9 +1377,9 @@ label advanced_goalkeeper:
                 narrator "You try to play high, but one loose touch nearly gifts an open goal. The stadium gasps before your defender slides in to rescue you."
                 
                 if career_path != "transfer":
-                    show captain at center with shake
+                    show captain at center with dissolve
                     captain "Stop playing with fire back there! Clear the ball if you're under pressure!"
-                    hide captain with shake
+                    hide captain with dissolve
 
         "Command the box and make the late save":
             if teamwork + skill + reputation >= 6:
@@ -1412,11 +1470,11 @@ label final_outcome:
         $ final_title = "Second Chance Season: Under the Captain's Heel"
         $ final_message = "You stumbled through critical fixtures, but the manager is throwing you a final structural lifeline. Your path forward requires a desperate, genuine fight to reclaim trust."
         
-        show captain at center with shake
+        show captain at center with dissolve
         narrator "You step out of Coach Rahman's office after a brutal, exhausting contract review. Afiq is waiting in the corridor, his arms crossed, shaking his head with utter disdain."
         captain "The gaffer is being incredibly soft on you because of your raw background. But luck runs out fast on this grass."
         captain "You dragged our tactical shape down this year, and you're lucky you weren't completely released. If I catch you slacking off on your positioning drills ever again, I will personally see to it that you're buried on the bench forever."
-        hide captain with shake
+        hide captain with dissolve
 
     else:
         $ final_title = "Hard Reset: Expelled from the Gates"
