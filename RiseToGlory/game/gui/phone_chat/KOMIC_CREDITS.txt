@@ -1,0 +1,4 @@
+Phone interface assets from "KOMIC" GUI Kit by One Level Studio.
+https://onelevelstudio.itch.io/komic
+
+Used under the license included with KOMIC_VisualNovelGUIKit_v1.0.
