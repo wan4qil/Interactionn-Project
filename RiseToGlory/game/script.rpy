@@ -30,6 +30,8 @@ image main_player_behind = "images/main_player_behind.png"
 image bg academy_pitchside_night = "images/academy_pitchside_night.png"
 image top_bar = Solid("#000")
 image bottom_bar = Solid("#000")
+image afiq = "images/afiq.png"
+image main_player_front = "images/main_player_front.png"
 
 show top_bar:
     xpos 0
@@ -46,6 +48,9 @@ show bottom_bar:
     linear 0.5 ypos 620
 
 transform scale_up:
+    zoom 0.6
+
+transform scale_down:
     zoom 0.6
 
 transform scout_right:
@@ -324,10 +329,11 @@ label academy_gate:
     narrator "{cps=60}Tonight, you walk through the academy gate for the first time.{/cps}"
     scene bg academy_gate_front
     with dissolve
-    narrator "{cps=60}Beyond it are floodlights, scouts, contracts, rival players, dressing-room politics, and the quiet fear that maybe the dream is bigger than you.{/cps}"
+    show main_player_front at center, scale_up
+    narrator "Beyond it are floodlights, scouts, contracts, rival players, dressing-room politics, and the quiet fear that maybe the dream is bigger than you."
     scene bg academy_pitchside_night
     with dissolve
-    show captain at right with dissolve
+    show afiq at left, scale_down with dissolve
     captain "You are the new one, right? Do not look so shocked. Everyone gets nervous the first day."
     player "I thought getting here would feel like the finish line."
     coach "It is not the finish line, [player_name]. It is the first whistle."
