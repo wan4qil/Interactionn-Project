@@ -49,6 +49,8 @@ image main_asking = "images/main_asking.png"
 image analyst = "images/analyst.png"
 image afiq_football = "images/afiq_football.png"
 image afiq_unsatisfied = "images/afiq_unsatisfied.png"
+image bg players_training = "images/players_training.png"
+image bg one_on_one = "images/one_on_one.png"
 
 show top_bar:
     xpos 0
@@ -562,6 +564,7 @@ label training_decision:
             narrator "{cps=60}You pull yourself up and offer a brief, professional nod. Coach Rahman watches from a distance, nodding slightly at your maturity.{/cps}"
             coach "Good tracking, Afiq. Clean recovery, [player_name]. Keep the ball moving!"
 
+    scene bg players_training with dissolve
     narrator "{cps=60}The whistle blows again, forcing everyone back into their tactical roles. The air is thick with sweat, rain, and spite.{/cps}"
 
     if position == "Attacker":
@@ -766,7 +769,9 @@ label first_match_attacker:
     narrator "{cps=60}The match reaches a boiling point.{/cps}"
     narrator "{cps=60}A long diagonal pass drops cleanly behind the opponent's full-back . You bring it down inside the penalty box with a sharp first touch .{/cps}"
     narrator "{cps=60}The goalkeeper rushes forward, trying to narrow your angle . Out of the corner of your eye, you see Afiq sprinting into space.{/cps}"
+    scene black with fade
     $ renpy.movie_cutscene("videos/first_match_situation.webm", stop_music = True)
+    scene bg one_on_one with dissolve
     captain "[player_name]! Square it! Square the damn ball!" 
 
     menu:
@@ -1001,102 +1006,6 @@ label first_match_goalkeeper:
 
     jump first_match_wrap
 
-label post_match_debrief:
-    scene bg office
-    with dissolve
-    
-    narrator "{cps=60}The steam from the showers fills the damp dressing room. The rain outside has stopped, but the atmosphere inside is still charged.{/cps}"
-    
-    if first_match_result in ["assist", "through ball assist", "defensive stand", "one on one save"]:
-        show captain at center with dissolve
-        narrator "{cps=60}Afiq sits on the bench, unstrapping his shin guards. He looks up as you walk past your locker.{/cps}"
-        captain "Hey. [player_name]."
-        player "Yeah?"
-        captain "Out there... on that play. You didn't play like a selfish street-baller. You played for the badge."
-        captain "Don't think we're best friends now. The next trial match is going to be even harder. But... you belong on this grass."
-        
-        menu:
-            "How do you cement this shifting dynamic?"
-            
-            "Acknowledge the partnership":
-                $ teamwork += 2
-                $ coach_opinion += 1
-                player "We win matches together, Afiq. Let's make sure the scouts have nothing bad to say about either of us."
-                narrator "{cps=60}Afiq nods quietly, a silent understanding forming between the two top talents in the academy.{/cps}"
-                    
-            "Keep the competitive edge sharp":
-                $ confidence += 2
-                player "Just make sure you keep making those runs. I’ll keep making you look good."
-                captain "Heh. Don't flatter yourself. Just don't drop your level."
-        
-        hide captain with dissolve
-
-    else:
-        show captain at center with dissolve
-        narrator "{cps=60}The moment Coach Rahman steps out to talk to the referee, Afiq slams his boot against the floor, glaring right at you.{/cps}"
-        captain "You completely compromised us out there! Your ego is going to cost half this squad their registration spots!"
-        
-        menu:
-            "The locker room goes dead silent. How do you respond?"
-                
-            "Stand your ground and confront him":
-                $ confidence += 2
-                $ pressure += 2
-                $ teamwork -= 1
-                player "Stop crying, Afiq! Football is about taking risks. If you can't handle the pressure of a real game, go back to the youth team."
-                narrator "{cps=60}Afiq steps up, jaw clenched, before a senior player steps between you two, pushing you both back.{/cps}"
-                captain "You won't last the month here. Mark my words."
-                    
-            "Take accountability but refuse to back down":
-                $ coach_opinion += 1
-                $ pressure += 1
-                player "The execution was poor, and I take responsibility for the mistake. But I'm not going to sit here and let you blame the entire match on one play."
-                captain "Then fix your game before you step back onto my pitch."
-        
-        hide captain with dissolve
-
-    narrator "{cps=60}Before the internal fighting can escalate any further, the heavy wooden door swings open.{/cps}"
-    
-
-label scouting_evaluation:
-    show maya_chen at right with dissolve
-    show coach at left with dissolve
-    
-    narrator "{cps=60}Coach Rahman enters, followed closely by Maya Chen, the chief scout. Maya is looking directly at her tablet, analyzing the match data.{/cps}"
-    
-    if first_match_result in ["assist", "through ball assist", "defensive stand", "one on one save"]:
-        scout "The chemistry in the second half was fascinating, Coach. [player_name] and Afiq showed real tactical synergy under pressure."
-        coach "True. Talent wins training drills, but maturity wins league cups. They adapted."
-    else:
-        scout "The data shows a massive tactical disconnect in the final third. The friction between [player_name] and Afiq is actively damaging our shape."
-        coach "They are playing two different games on the same pitch. If they don't iron out this pride, one of them will be watching the showcase from the stands."
-
-    scout "[player_name], I'm finalizing my report for the senior team representatives."
-    scout "Individual brilliance catches our eye, but internal toxicity ruins clubs. How do you plan to handle the internal competition here?"
-
-    menu:
-        "Answer Maya Chen's evaluation question:"
-            
-        "I'm here to build a team, not an empire. (Focus on Teamwork)":
-            $ teamwork += 2
-            $ coach_opinion += 2
-            $ reputation += 1
-            scout "A mature answer. The clubs I represent value players who elevate those around them."
-            narrator "{cps=60}Coach Rahman nods approvingly, crossing his arms with a slight smile.{/cps}"
-
-        "I'm here to be the best. Competition makes us both sharper. (Focus on Confidence)":
-            $ confidence += 3
-            $ pressure += 1
-            $ reputation += 2
-            scout "Spoken like a true forward-thinking asset. Just ensure your ambition doesn't become a liability."
-            narrator "{cps=60}Coach Rahman narrows his eyes. He respects the drive, but the warning remains unsaid.{/cps}"
-
-    hide maya_chen
-    hide coach
-    with dissolve
-    
-    jump next_chapter_setup
-
 label first_match_wrap:
     $ skill = clamp_stat(skill)
     $ coach_opinion = clamp_stat(coach_opinion)
@@ -1175,7 +1084,7 @@ label career_decision:
     scene bg transfer_meeting_room
     with dissolve
     
-    show maya_chen at scout_right
+    show maya_chen at slide_in_right
     with dissolve
     
     narrator "{cps=60}The heavy door of the transfer room shuts, cutting off the noise of the boots in the corridor. Maya Chen looks up from her tablet, sliding a sleek folder across the polished table.{/cps}"
