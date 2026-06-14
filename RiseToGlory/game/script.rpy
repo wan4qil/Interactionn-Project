@@ -1131,8 +1131,9 @@ label career_decision:
     scene bg transfer_meeting_room
     with dissolve
     
-    show maya_chen at maya_transfer_meeting
-
+    show maya_chen at right, scale_down with dissolve
+    with dissolve
+    show main_asking at left, scale_up with dissolve
     
     narrator "{cps=60}The heavy door of the transfer room shuts, cutting off the noise of the boots in the corridor. Maya Chen looks up from her tablet, sliding a sleek folder across the polished table.{/cps}"
 
@@ -1167,6 +1168,7 @@ label career_decision:
             $ loyalty -= 1
             $ pressure += 2
             
+            show main_player_smirk at center, scale_main_smirk with dissolve
             scout "Brave. At Northbridge, every single touch is evaluated, but every great match travels twice as far."
             narrator "{cps=60}The route becomes glamorous but unforgiving. You arrive as a pivot player—someone the new club wants to build attacks and attention around.{/cps}"
             narrator "{cps=60}As you sign the paperwork, you realize your rivalry with Afiq isn't over. You've just set up a massive future collision on a much bigger stage.{/cps}"
@@ -1257,6 +1259,7 @@ label advanced_attacker:
                 $ reputation += 3
                 $ confidence += 2
                 $ fan_mood += 2
+                show main_training at center, scale_down with dissolve
                 narrator "{cps=60}You keep vanishing from the defender's shoulder, then appearing exactly where the cross lands.{/cps}"
                 
                 if career_path == "transfer":
