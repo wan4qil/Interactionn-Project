@@ -1088,9 +1088,6 @@ label career_decision:
     scene bg transfer_meeting_room
     with dissolve
     
-    show maya_chen at scout_right
-    with dissolve
-
     show maya_chen at maya_transfer_meeting
 
     
