@@ -32,6 +32,7 @@ image afiq = "images/afiq.png"
 image captain = "images/afiq.png"
 image main_player_front = "images/main_player_front.png"
 image coach_rahman = "images/coach_rahman.png"
+image coach_rahman_excited = "images/coach_rahman_excited.png"
 image main_talking = "images/main_talking.png"
 image bg first_match = "images/first_match.png"
 image bg players_celebrate = "images/players_celebrate.png"
@@ -46,8 +47,16 @@ image afiq_tackled = "images/afiq_tackled.png"
 image afiq_after_tackle = "images/afiq_after_tackle.png"
 image main_push_afiq = "images/main_push_afiq.png"
 image coach_rahman_mad = "images/coach_rahman_mad.png"
+image main_asking = "images/main_asking.png"
+image analyst = "images/analyst.png"
+image afiq_football = "images/afiq_football.png"
+image afiq_unsatisfied = "images/afiq_unsatisfied.png"
 image bg players_training = "images/players_training.png"
 image bg one_on_one = "images/one_on_one.png"
+image coach_rahman_excited = "images/coach_rahman_excited.png"
+image afiq_disbelieve = "images/afiq_disbelieve.png"
+image main_player_smirk = "images/main_player_smirk.png"
+image coach_rahman_crosshand = "images/coach_rahman_crosshand.png"
 image bg press_conference = "images/press_conference.png"
 image bg tunnel = "images/tunnel.png"
 image bg out_tunnel = "images/tunnel.png"
@@ -67,6 +76,12 @@ show bottom_bar:
     xsize 1280
     ysize 100
     linear 0.5 ypos 620
+
+transform scale_main_smirk:
+    zoom 1
+
+transform scale_analyst:
+    xalign 0.2
 
 transform scale_up:
     zoom 0.6
@@ -534,7 +549,8 @@ label training_decision:
     narrator "{cps=60}The first elite training session is faster than expected. Players sprint, collide, recover, shout, reset, and sprint again.{/cps}"
     scene black with fade
     $ renpy.movie_cutscene("videos/training.webm", stop_music=True)
-    scene bg training_drills with fade
+    scene bg academy_training_ground with fade
+    show coach_rahman at center, scale_down with dissolve
     coach "Today is not about looking talented. Today is about proving you can repeat good decisions when your lungs are burning."
 
     hide coach_rahman with dissolve
@@ -563,6 +579,8 @@ label training_decision:
             show coach_rahman_mad at right, scale_coach_mad with dissolve
             coach "[player_name]! Afiq! Keep your hands to yourselves or both of you can pack your bags right now!"
             narrator "{cps=60}The coach writes something sharp on his clipboard. Your temper just cost you points with the staff.{/cps}"
+            hide main_push_afiq with dissolve
+            hide coach_rahman_mad with dissolve
 
         "Dust yourself off silently and offer a mocking smirk":
             $ confidence += 2
@@ -584,8 +602,10 @@ label training_decision:
     narrator "{cps=60}The whistle blows again, forcing everyone back into their tactical roles. The air is thick with sweat, rain, and spite.{/cps}"
 
     if position == "Attacker":
+        show main_training at center, scale_up with dissolve
         narrator "{cps=60}Your drill is ruthless: curved runs behind the line, first-time finishing, weak-foot shots, and pressing triggers when the defender receives with a bad touch.{/cps}"
     elif position == "Midfielder":
+        show main_training at center, scale_up with dissolve
         narrator "{cps=60}Your drill is a storm of rondos, half-turn receiving, scanning before the pass, switch-of-play timing, and resisting the urge to force every ball forward.{/cps}"
     elif position == "Defender":
         narrator "{cps=60}Your drill is built on duels: body shape, recovery runs, last-second blocks, defensive headers, and choosing when to step out or hold the line.{/cps}"
@@ -616,7 +636,12 @@ label training_decision:
             $ skill += 2
             $ coach_opinion += 2
             $ teamwork += 1
+            hide main_training with dissolve
+            show bg training_ground_real with dissolve
+            show main_asking at left, scale_up with dissolve
+            show coach_rahman at right, scale_down with dissolve
             coach "That is professional behavior. You improve faster when you understand why."
+            show analyst at right, scale_down with dissolve
             analyst "Your clips are not perfect, but you are asking the right questions. That matters."
             narrator "{cps=60}You learn the system instead of just surviving the drill.{/cps}"
 
@@ -658,9 +683,11 @@ label first_match:
         jump bench_arc
 
     narrator "{cps=60}The team sheet goes up on the wall. Your name is in the starting lineup.{/cps}"
+    show afiq_football at center, scale_down with dissolve
     captain "First start. Do not play the occasion. Play the ball."
 
-    show captain at center with dissolve
+    hide afiq_football with dissolve
+    show afiq_unsatisfied at center, scale_down with dissolve
     narrator "{cps=60}Afiq stands in front of the board, staring at your name in the Starting XI. His knuckles are white as he grips his kit bag.{/cps}"
     captain "Starting? You've been here five minutes and he's handing you the shirt?"
                 
@@ -670,7 +697,10 @@ label first_match:
         "Remind him of his own advice":
             $ confidence += 2
             $ pressure += 1
+            hide afiq_unsatisfied with dissolve
+            show main_asking at center, scale_up with dissolve
             player "Like you said, Afiq... don't play the occasion. Play the ball. Watch me play it tonight."
+            show afiq_unsatisfied at right, scale_down with dissolve
             captain "Arrogant bastard. If you drop points for us out there, I'll make sure the gaffer never forgets it."
             narrator "{cps=60}He brushes past you, slamming the dressing room door shut.{/cps}"
 
@@ -681,7 +711,7 @@ label first_match:
             narrator "{cps=60}Afiq looks at your extended hand, scowls, and ignores it—but his posture loosens slightly.{/cps}"
             captain "Don't mistake my silence for friendship, street-boy. Just don't ruin my stats out there."        
 
-    hide captain with dissolve
+    hide afiq_unsatisfied with dissolve
 
     scene bg first_match with dissolve    
     narrator "{cps=60}By the 83rd minute, the match is tied. Every pass sounds louder than it should.{/cps}"
@@ -813,15 +843,26 @@ label first_match_attacker:
                 $ confidence += 2 
                 $ fan_mood += 2 
                 narrator "{cps=60}You block out his shouting. You strike the ball early, catching the goalkeeper completely off guard .{/cps}"
+                narrator "{cps=60}The ball flashes across the wet grass and kisses the inside of the far post. Goal! {/cps}"
+                scene bg gooaall with dissolve
+                narrator "{explode=1.5}GOOOOOOOOOOOOAAAAAAAALLLLLLLLLL!!!!!! {/explode}"
                 scene bg gooaall with dissolve
                 narrator "{explode=1.5}GOOOOOOOOOOOOAAAAAAAALLLLLLLLLL!!!!!! {/explode}"
                 
                 scene bg players_celebrate with dissolve
                 coach "That is the kind of courage scouts remember." 
                 
-                show captain at center with dissolve
+                scene bg players_celebrate with dissolve
+
+                show coach_rahman_excited at center, scale_down with dissolve
+                coach "That is the kind of courage scouts remember." 
+                hide coach_rahman_excited with dissolve
+                show afiq_disbelieve at center, scale_down with dissolve
                 narrator "{cps=60}Afiq jogs over, his mouth slightly open in disbelief. He wanted the spotlight, but your skill silenced him.{/cps}"
+                hide afiq_disbelieve with dissolve
+                show main_player_smirk at center, scale_main_smirk with dissolve
                 player "Told you my mouth wasn't the only thing that could save me."
+                show afiq_unsatisfied at right, scale_down with dissolve
                 captain "Hmph. Lucky strike. Do it again next week, then we'll talk."
             else:
                 $ first_match_result = "miss" 
@@ -835,7 +876,7 @@ label first_match_attacker:
                 captain "Selfish! Absolute street-ball garbage! You choked because your ego is bigger than the team!"
                 narrator "{cps=60}Afiq aggressively gets into your face, screaming over the sound of the rain as you look down at the grass.{/cps}"
 
-    hide captain with dissolve
+    hide afiq_disbelieve with dissolve
 
     jump first_match_wrap
 
@@ -1024,7 +1065,9 @@ label first_match_wrap:
 label coach_feedback:
     scene bg coach_office
     with dissolve
-    
+    show coach_rahman_crosshand at right, scale_down with dissolve
+    show analyst at right, scale_down with dissolve
+    show main_asking at left, scale_down with dissolve
     coach "Sit down, [player_name]. Close the door behind you."
     narrator "Coach Rahman is sitting behind his heavy wooden desk. Next to him, the Performance Analyst is reviewing training and match telemetry data on a tablet."
     coach "The staff want to review exactly where your career is heading, because right now, your relationship with the squad—and specifically Afiq—is shifting the energy of this academy."
