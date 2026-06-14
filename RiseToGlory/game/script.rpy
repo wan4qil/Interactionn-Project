@@ -97,6 +97,26 @@ transform scout_right:
     yalign 1.0
     zoom 0.72
 
+transform maya_transfer_meeting:
+    xalign 0.79
+    yalign 1.02
+    zoom 0.66
+
+    on show:
+        xoffset 260
+        yoffset 18
+        alpha 0.0
+        parallel:
+            easeout_cubic 0.65 xoffset 0 yoffset 0
+        parallel:
+            linear 0.30 alpha 1.0
+
+    on hide:
+        parallel:
+            easein_cubic 0.35 xoffset 180 yoffset 12
+        parallel:
+            linear 0.25 alpha 0.0
+
 transform slide_in_left:
     xpos -500 ypos 0.8        # Start off-screen to the left
     easein_cubic 0.6 xpos 0.1 # Slide in over 0.6s with ease-out cubic curve
@@ -1114,6 +1134,9 @@ label career_decision:
     show maya_chen at scout_right
     show maya_chen slide_in_right
     with dissolve
+
+    show maya_chen at maya_transfer_meeting
+
     
     narrator "{cps=60}The heavy door of the transfer room shuts, cutting off the noise of the boots in the corridor. Maya Chen looks up from her tablet, sliding a sleek folder across the polished table.{/cps}"
 
@@ -1180,7 +1203,10 @@ label career_decision:
             narrator "{cps=60}You keep the dream alive without ending the story early. You refuse to flee the academy, choosing to sharpen your blade until Afiq can no longer look down on you.{/cps}"
 
     $ add_note("The transfer decision demonstrates feasibility and practicality: different paths reuse the same system but change difficulty.")
-     
+
+    hide maya_chen
+    pause 0.35
+
     jump advanced_match
 
 label advanced_match:
