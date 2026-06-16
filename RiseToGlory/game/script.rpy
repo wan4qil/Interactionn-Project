@@ -1144,6 +1144,7 @@ label coach_feedback:
     jump career_decision
 
 label career_decision:
+    hide main_asking with dissolve
     scene bg transfer_meeting_room
     with dissolve
     
