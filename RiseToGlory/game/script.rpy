@@ -117,6 +117,11 @@ transform maya_transfer_meeting:
         parallel:
             linear 0.25 alpha 0.0
 
+transform coach_transfer_meeting:
+    xalign 0.18
+    yalign 1.0
+    zoom 0.52
+
 transform slide_in_left:
     xpos -500 ypos 0.8        # Start off-screen to the left
     easein_cubic 0.6 xpos 0.1 # Slide in over 0.6s with ease-out cubic curve
@@ -356,6 +361,8 @@ screen project_end_screen(final_title, final_message, final_score):
                 textbutton "Exit" action Quit(confirm=False) xsize 160
 
 label start:
+    play music "audio/rain_on_my_window.mp3" fadein 2.0 loop if_changed
+
     call screen project_main_menu
 
     if _return == "instructions":
@@ -548,7 +555,7 @@ label training_decision:
     show coach_rahman at center, scale_down with dissolve
     narrator "{cps=60}The first elite training session is faster than expected. Players sprint, collide, recover, shout, reset, and sprint again.{/cps}"
     scene black with fade
-    $ renpy.movie_cutscene("videos/training.webm", stop_music=True)
+    $ renpy.movie_cutscene("videos/training.webm", stop_music=False)
     scene bg academy_training_ground with fade
     show coach_rahman at center, scale_down with dissolve
     coach "Today is not about looking talented. Today is about proving you can repeat good decisions when your lungs are burning."
@@ -753,12 +760,16 @@ label bench_arc:
 
     hide captain with dissolve
 
+    show coach_rahman at right, scale_down with dissolve
     coach "You are on the bench today. This is not punishment. This is information."
     player "I can help the team."
     coach "Then prove it from minute one of training tomorrow. A career is not built only on match nights."
+    hide coach_rahman with dissolve
     narrator "{cps=60}For eighty minutes, you sit in a jacket, watching players in your position make the runs, tackles, passes, or saves you imagined for yourself.{/cps}"
     narrator "{cps=60}The match ends in a draw. Nobody blames you. Somehow, that hurts more.{/cps}"
+    show captain at center with dissolve
     captain "Do not disappear because of one bench. Make the coach feel uncomfortable leaving you out."
+    hide captain with dissolve
 
     menu:
         "How do you begin the hard-work arc?"
@@ -770,7 +781,9 @@ label bench_arc:
             $ teamwork += 1
             $ first_match_result = "bench comeback"
             narrator "{cps=60}You become the first player on the training pitch and the last one out. The staff stop talking about your absence and start talking about your response.{/cps}"
+            show coach_rahman at right, scale_down with dissolve
             coach "This is what I wanted to see. The bench can break a player, or it can sharpen one."
+            hide coach_rahman with dissolve
 
         "Ask senior players to mentor you":
             $ skill += 2
@@ -778,7 +791,9 @@ label bench_arc:
             $ teamwork += 2
             $ first_match_result = "bench learner"
             narrator "{cps=60}You learn tiny professional habits: how to recover, when to speak, how to read a defender's hips, how to stay ready without sulking.{/cps}"
+            show captain at center with dissolve
             captain "You listened. That is why you are still moving forward."
+            hide captain with dissolve
 
         "Complain and wait for another chance":
             $ confidence += 1
@@ -787,7 +802,9 @@ label bench_arc:
             $ pressure += 2
             $ first_match_result = "bench frustration"
             narrator "{cps=60}Your frustration is understandable, but it leaks into your body language. Staff notice everything at this level.{/cps}"
+            show coach_rahman at right, scale_down with dissolve
             coach "Wanting minutes is normal. Acting entitled to them is dangerous."
+            hide coach_rahman with dissolve
 
     $ skill = clamp_stat(skill)
     $ coach_opinion = clamp_stat(coach_opinion)
@@ -804,7 +821,7 @@ label first_match_attacker:
     narrator "{cps=60}A long diagonal pass drops cleanly behind the opponent's full-back . You bring it down inside the penalty box with a sharp first touch .{/cps}"
     narrator "{cps=60}The goalkeeper rushes forward, trying to narrow your angle . Out of the corner of your eye, you see Afiq sprinting into space.{/cps}"
     scene black with fade
-    $ renpy.movie_cutscene("videos/first_match_situation.webm", stop_music = True)
+    $ renpy.movie_cutscene("videos/first_match_situation.webm", stop_music=False)
     scene bg one_on_one with dissolve
     captain "[player_name]! Square it! Square the damn ball!" 
 
@@ -843,11 +860,10 @@ label first_match_attacker:
                 $ confidence += 2 
                 $ fan_mood += 2 
                 narrator "{cps=60}You block out his shouting. You strike the ball early, catching the goalkeeper completely off guard .{/cps}"
+                play sound "audio/goal_commentator.mp3"
                 narrator "{cps=60}The ball flashes across the wet grass and kisses the inside of the far post. Goal! {/cps}"
                 scene bg gooaall with dissolve
-                narrator "{explode=1.5}GOOOOOOOOOOOOAAAAAAAALLLLLLLLLL!!!!!! {/explode}"
-                scene bg gooaall with dissolve
-                narrator "{explode=1.5}GOOOOOOOOOOOOAAAAAAAALLLLLLLLLL!!!!!! {/explode}"
+                narrator "{explode=1.0}GOOOOOOOOOOOOAAAAAAAALLLLLLLLLL!!!!!! {/explode}"
                 
                 scene bg players_celebrate with dissolve
                 coach "That is the kind of courage scouts remember." 
@@ -1131,9 +1147,8 @@ label career_decision:
     scene bg transfer_meeting_room
     with dissolve
     
-    show maya_chen at right, scale_down with dissolve
-    with dissolve
-    show main_asking at left, scale_up with dissolve
+    show maya_chen at maya_transfer_meeting
+    show coach_rahman_crosshand at coach_transfer_meeting with dissolve
     
     narrator "{cps=60}The heavy door of the transfer room shuts, cutting off the noise of the boots in the corridor. Maya Chen looks up from her tablet, sliding a sleek folder across the polished table.{/cps}"
 
@@ -1168,6 +1183,7 @@ label career_decision:
             $ loyalty -= 1
             $ pressure += 2
             
+            hide coach_rahman_crosshand with dissolve
             show main_player_smirk at center, scale_main_smirk with dissolve
             scout "Brave. At Northbridge, every single touch is evaluated, but every great match travels twice as far."
             narrator "{cps=60}The route becomes glamorous but unforgiving. You arrive as a pivot player—someone the new club wants to build attacks and attention around.{/cps}"
@@ -1203,6 +1219,7 @@ label career_decision:
     $ add_note("The transfer decision demonstrates feasibility and practicality: different paths reuse the same system but change difficulty.")
 
     hide maya_chen
+    hide coach_rahman_crosshand
     pause 0.35
 
     jump advanced_match
